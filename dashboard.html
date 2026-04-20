@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard | CarePlus</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-notes-medical"></i> CarePlus
+            </a>
+            <div class="nav-links">
+                
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="dashboard-grid">
+            <aside class="sidebar">
+                <h3 id="welcomeName">Welcome, Patient</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                    <li><a href="appointment.html"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</a></li>
+                    <li><a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                </ul>
+            </aside>
+
+            <div class="dashboard-content">
+                <h2>Overview</h2>
+                
+                <div class="status-cards">
+                    <div class="stat-card">
+                        <h4>Total Appointments</h4>
+                        <div class="value" id="totalAppt">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Approved</h4>
+                        <div class="value" id="approvedAppt" style="color: var(--secondary)">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Pending</h4>
+                        <div class="value" id="pendingAppt" style="color: var(--warning)">0</div>
+                    </div>
+                </div>
+
+                <div class="content-card mt-4">
+                    <div class="card-header">
+                        <h3>My Appointments</h3>
+                        <a href="appointment.html" class="btn btn-primary btn-sm">New Booking</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="appointmentsTable">
+                            <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Doctor</th>
+                                        <th>Specialty</th>
+                                        <th>Date & Time</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script>
+       
+        checkAuth('patient');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+            document.getElementById('welcomeName').textContent = `Welcome, ${currentUser.name.split(' ')[0]}`;
+
+            loadPatientAppointments(currentUser.id);
+        });
+
+        async function loadPatientAppointments(patientId) {
+            try {
+                const myAppointments = await apiCall(`/appointments/patient/${patientId}`);
+                
+                document.getElementById('totalAppt').textContent = myAppointments.length;
+                document.getElementById('approvedAppt').textContent = myAppointments.filter(a => a.status === 'Approved').length;
+                document.getElementById('pendingAppt').textContent = myAppointments.filter(a => a.status === 'Scheduled').length;
+
+                const tbody = document.querySelector('#appointmentsTable tbody');
+                tbody.innerHTML = '';
+
+                if (myAppointments.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding: 2rem;">No appointments found. <a href="appointment.html">Book one now.</a></td></tr>`;
+                    return;
+                }
+
+                myAppointments.reverse().forEach(appt => {
+                    let badgeClass = 'badge-pending';
+                    if (appt.status === 'Approved' || appt.status === 'Completed') badgeClass = 'badge-approved';
+                    if (appt.status === 'Cancelled' || appt.status === 'Rejected') badgeClass = 'badge-rejected';
+                    
+                    const dateObj = new Date(appt.appointmentTime);
+                    const formattedDate = dateObj.toLocaleDateString();
+                    const formattedTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    
+                    const docPhoto = appt.doctor?.image || 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>#${appt.id}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <img src="${docPhoto}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+                                <strong>${appt.doctor?.name || 'Unknown'}</strong>
+                            </div>
+                        </td>
+                        <td>${appt.doctor?.specialty || 'General'}</td>
+                        <td>${formattedDate} ${formattedTime}</td>
+                        <td><span class="badge ${badgeClass}">${appt.status}</span></td>
+                        <td>
+                            <button class="btn btn-outline btn-sm" onclick="cancelAppointment(${appt.id})" style="color: #dc2626; border-color: #fca5a5; padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                <i class="fa-solid fa-trash-can"></i> Cancel
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Failed to load appointments:', error);
+            }
+        }
+
+        async function cancelAppointment(id) {
+            if(!confirm('Are you sure you want to cancel and remove this appointment?')) return;
+
+            try {
+                await apiCall(`/appointments/${id}`, 'DELETE');
+                const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+                loadPatientAppointments(currentUser.id);
+                alert('Appointment cancelled successfully');
+            } catch (error) {
+                alert('Cancellation Failed: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

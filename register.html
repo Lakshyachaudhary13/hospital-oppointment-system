@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | CarePlus</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-notes-medical"></i> CarePlus
+            </a>
+            <div class="nav-links">
+                <a href="login.html">Login</a>
+                <a href="register.html" class="btn btn-signup">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2>Create an Account</h2>
+                <p>Join CarePlus to manage your health appointments easily.</p>
+            </div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" placeholder="e.g. John Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" placeholder="e.g. john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPhone">Phone Number</label>
+                    <input type="tel" id="regPhone" placeholder="e.g. 1234567890" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" placeholder="Enter a secure password" required>
+                </div>
+
+                
+                <input type="hidden" id="regRole" value="patient">
+                
+                <button type="submit" class="btn btn-primary w-full">Register Account</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script>
+        
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+            const password = document.getElementById('regPassword').value;
+            const role = document.getElementById('regRole').value;
+            
+            try {
+                await apiCall('/users/register', 'POST', { name, email, phone, password, role });
+                alert('Registration Successful! Please login to continue.');
+                window.location.href = 'login.html';
+            } catch (error) {
+                alert('Registration Failed: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
