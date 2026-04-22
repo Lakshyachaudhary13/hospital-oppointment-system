@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Doctors | CarePlus</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .doctors-header {
+            padding: 100px 0 60px;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('images/hero-bg.png');
+            background-size: cover;
+            text-align: center;
+        }
+
+        .search-filter-container {
+            margin-top: -30px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-box input {
+            border: none;
+            padding: 10px;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .doctor-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding-bottom: 5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-notes-medical"></i> CarePlus
+            </a>
+            <div class="nav-links" style="gap: 1.5rem;">
+                <div class="hidden-mobile" style="display: flex; gap: 1rem; align-items: center;">
+                    <a href="login.html" style="font-weight: 600; color: var(--dark); text-decoration: none;">Login</a>
+                    <a href="register.html" class="btn btn-signup btn-sm" style="padding: 0.5rem 1.25rem;">Sign Up</a>
+                </div>
+                <div class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-equals"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <aside class="sidebar">
+        <div style="padding: 1.5rem; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 1rem;">
+            <button onclick="toggleSidebar()" style="background: var(--bg-color); border: 1px solid rgba(0,0,0,0.1); width: 40px; height: 40px; border-radius: 10px; font-size: 1.25rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition);">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="doctors.html" class="active"><i class="fa-solid fa-user-doctor"></i> Explore Doctors</a></li>
+            <li><a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Login</a></li>
+            <li><a href="register.html"><i class="fa-solid fa-user-plus"></i> Create Account</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <section class="doctors-header">
+            <div class="container">
+                <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">Meet Our <span style="color: var(--primary);">Specialists</span></h1>
+                <p style="color: var(--light-text); font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Connect with our world-class medical team. Each doctor is board-certified and brings years of expertise to your care.</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="search-filter-container">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="doctorSearch" placeholder="Search by name or specialty...">
+                </div>
+            </div>
+
+            <div class="doctor-list-grid" id="fullDoctorGrid">
+                <!-- Data loaded here -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                    <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--primary);"></i>
+                    <p style="margin-top: 1rem;">Fetching our medical experts...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <a href="index.html" class="footer-logo">
+                    <i class="fa-solid fa-notes-medical"></i> CarePlus
+                </a>
+                <p style="color: #94a3b8;">Premium medical consultations at your fingertips.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="doctors.html">Find Doctors</a></li>
+                    <li><a href="register.html">Get Started</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CarePlus Health Systems. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        let allDoctors = [];
+
+        async function loadDoctors() {
+            try {
+                const grid = document.getElementById('fullDoctorGrid');
+                allDoctors = await apiCall('/doctors');
+                
+                renderDoctors(allDoctors);
+            } catch (error) {
+                console.error('Failed to load doctors:', error);
+                document.getElementById('fullDoctorGrid').innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                        <i class="fa-solid fa-triangle-exclamation" style="font-size: 3rem; color: #ef4444;"></i>
+                        <p style="margin-top: 1rem; color: #ef4444;">Unable to load doctors. Please check your connection.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderDoctors(doctors) {
+            const grid = document.getElementById('fullDoctorGrid');
+            if (doctors.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No doctors found matching your criteria.</p>';
+                return;
+            }
+
+            grid.innerHTML = doctors.map(doc => {
+                const initials = doc.name.replace('Dr. ', '').substring(0, 2).toUpperCase();
+                const avatarContent = doc.image 
+                    ? `<img src="${doc.image}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">` 
+                    : initials;
+
+                return `
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">${avatarContent}</div>
+                        <div class="doctor-name">${doc.name}</div>
+                        <div class="doctor-spec">${doc.specialty}</div>
+                        <div style="color: var(--light-text); font-size: 0.9rem; margin-bottom: 1rem;">
+                            <i class="fa-solid fa-star" style="color: #f59e0b;"></i> ${doc.experience} Experience
+                        </div>
+                        <div style="display:flex; gap: 0.5rem;">
+                            <a href="appointment.html?doctorId=${doc.id}" class="btn btn-primary btn-sm flex-1">Book Now</a>
+                            <a href="register.html" class="btn btn-outline btn-sm">Profile</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        document.getElementById('doctorSearch').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allDoctors.filter(doc => 
+                doc.name.toLowerCase().includes(term) || 
+                doc.specialty.toLowerCase().includes(term)
+            );
+            renderDoctors(filtered);
+        });
+
+        document.addEventListener('DOMContentLoaded', loadDoctors);
+    </script>
+</body>
+
+</html>

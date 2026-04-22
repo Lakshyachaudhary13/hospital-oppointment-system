@@ -17,12 +17,34 @@
             <a href="index.html" class="logo">
                 <i class="fa-solid fa-notes-medical"></i> CarePlus
             </a>
-            <div class="nav-links">
-                <a href="login.html">Login</a>
-                <a href="register.html" class="btn btn-signup">Sign Up</a>
+            <div class="nav-links" style="gap: 1.5rem;">
+                <div class="hidden-mobile" style="display: flex; gap: 1rem; align-items: center;">
+                    <a href="login.html" style="font-weight: 600; color: var(--dark); text-decoration: none;">Login</a>
+                    <a href="register.html" class="btn btn-signup btn-sm" style="padding: 0.5rem 1.25rem;">Sign Up</a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-equals"></i>
+                </div>
             </div>
         </nav>
     </header>
+
+    <aside class="sidebar">
+        <div style="padding: 1.5rem; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 1rem;">
+            <button onclick="toggleSidebar()" style="background: var(--bg-color); border: 1px solid rgba(0,0,0,0.1); width: 40px; height: 40px; border-radius: 10px; font-size: 1.25rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition);">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="doctors.html"><i class="fa-solid fa-user-doctor"></i> Explore Doctors</a></li>
+            <li><a href="login.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a></li>
+            <li><a href="register.html"><i class="fa-solid fa-user-plus"></i> Create Account</a></li>
+        </ul>
+    </aside>
 
     <main>
         <section class="hero">
@@ -31,10 +53,10 @@
                 <p>Experience the next generation of healthcare management. Connect with world-class specialists, manage
                     your health timeline, and book appointments in seconds.</p>
                 <div class="hero-actions">
-                    <a href="register.html" class="btn btn-primary">Book Consultation <i
-                            class="fa-solid fa-arrow-right"></i></a>
-                    <a href="#doctors" class="btn btn-outline">Explore Doctors</a>
+                    <a href="doctors.html" class="btn btn-primary">Book Appointment</a>
+                    <a href="#services" class="btn btn-outline">Our Services</a>
                 </div>
+
             </div>
             <div class="hero-image">
                 <img src="images/hero.png" alt="CarePlus Virtual Consultation Illustration">
@@ -91,6 +113,37 @@
                 </div>
             </div>
         </section>
+        <section id="services" style="padding: 10rem 0 5rem; background: var(--bg-color);">
+            <div class="container section-header" style="text-align: center; margin-bottom: 5rem;">
+                <span style="color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Our Specialities</span>
+                <h2 style="font-size: 3rem; margin-top: 1rem;">World-Class Healthcare Services</h2>
+                <div style="width: 80px; height: 4px; background: var(--primary); margin: 2rem auto;"></div>
+            </div>
+            <div class="container">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem;">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <h3>Cardiology</h3>
+                        <p>Expert care for your heart with advanced diagnostic and treatment protocols.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-brain"></i></div>
+                        <h3>Neurology</h3>
+                        <p>Providing specialized treatment for complex brain and nervous system disorders.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-child"></i></div>
+                        <h3>Pediatrics</h3>
+                        <p>Compassionate healthcare tailored specifically for the growth and well-being of children.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-hospital-user"></i></div>
+                        <h3>Telemedicine</h3>
+                        <p>Access high-quality medical consultations from the safety and comfort of your home.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section id="how-it-works" class="section-padding" style="background: white;">
             <div class="container">
@@ -134,9 +187,40 @@
                 <div class="doctor-grid" id="featuredDoctorGrid">
                     <!-- Doctors loaded dynamically -->
                 </div>
-                <div style="text-align: center; margin-top: 4rem;">
-                    <a href="register.html" class="btn btn-primary">View All Doctors <i
-                            class="fa-solid fa-arrow-right"></i></a>
+
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="section-padding" style="background: rgba(13,148,136,0.02);">
+            <div class="container">
+                <div class="section-header" style="text-align: center; margin-bottom: 5rem;">
+                    <h2 style="font-size: 2.5rem; font-weight: 800;">Frequently Asked <span style="color: var(--primary);">Questions</span></h2>
+                    <p style="color: var(--light-text);">Everything you need to know about our healthcare services.</p>
+                </div>
+                
+                <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="content-card" style="padding: 1.5rem; cursor: pointer;">
+                        <h4 style="display: flex; justify-content: space-between; align-items: center;">
+                            How do I book an emergency appointment?
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </h4>
+                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">You can call our 24/7 emergency hotline at +1 234 567 890 or use the instant booking feature for the earliest available slot.</p>
+                    </div>
+                    <div class="content-card" style="padding: 1.5rem; cursor: pointer;">
+                        <h4 style="display: flex; justify-content: space-between; align-items: center;">
+                            Can I access my medical reports online?
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </h4>
+                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">Yes! Log in to your patient dashboard and navigate to the "Reports & Bills" tab to view and download all your clinical records.</p>
+                    </div>
+                    <div class="content-card" style="padding: 1.5rem; cursor: pointer;">
+                        <h4 style="display: flex; justify-content: space-between; align-items: center;">
+                            Is my health data secure on CarePlus?
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                        </h4>
+                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">Absolutely. We use enterprise-level AES-256 encryption and follow all international healthcare privacy standards.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -146,57 +230,56 @@
                 <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem;">Ready to Prioritize Your Health?</h2>
                 <p style="font-size: 1.25rem; margin-bottom: 3rem; opacity: 0.9; max-width: 700px; margin-left: auto; margin-right: auto;">Join CarePlus today and get access to the best medical professionals in the country from the comfort of your home.</p>
                 <div class="hero-actions" style="justify-content: center;">
-                    <a href="register.html" class="btn btn-white" style="background: white; color: var(--primary);">Create Free Account</a>
-                    <a href="login.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">Sign in Now</a>
+                    <a href="register.html" class="btn" style="background: white; color: var(--primary); font-weight: 800;">Get Started Now</a>
+                    <a href="doctors.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">Explore Doctors</a>
                 </div>
+
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <a href="index.html" class="footer-logo">
-                    <i class="fa-solid fa-notes-medical"></i> CarePlus
-                </a>
-                <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 2rem;">Revolutionizing healthcare delivery through digital excellence. We provide premium medical consultations and appointment management at your fingertips.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="footer-logo"><i class="fa-solid fa-notes-medical"></i> CarePlus</a>
+                    <p style="color: #94a3b8; line-height: 1.8; margin-top: 1rem;">Leading the way in digital healthcare. Our mission is to provide accessible, high-quality medical services to everyone, everywhere through innovation and compassion.</p>
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <a href="#" style="color: white; font-size: 1.25rem;"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" style="color: white; font-size: 1.25rem;"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" style="color: white; font-size: 1.25rem;"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#" style="color: white; font-size: 1.25rem;"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="doctors.html">Find Doctors</a></li>
+                        <li><a href="login.html">Patient Login</a></li>
+                        <li><a href="#services">Our Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal Info</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Patient Rights</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Office Info</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-location-dot"></i> 123 Health Ave, NY</a></li>
+                        <li><a href="#"><i class="fa-solid fa-phone"></i> +1 234 567 890</a></li>
+                        <li><a href="#"><i class="fa-solid fa-envelope"></i> help@careplus.com</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="register.html">Become a Doctor</a></li>
-                    <li><a href="#">Our Services</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                </ul>
+            <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; text-align: center; color: #64748b; font-size: 0.9rem;">
+                <p>&copy; 2026 CarePlus Hospital System. All rights reserved.</p>
             </div>
-            <div class="footer-section">
-                <h4>Support</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Insurance Partners</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Newsletter</h4>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem;">Get health tips and updates from our experts directly in your inbox.</p>
-                <div style="display: flex; gap: 0.5rem;">
-                    <input type="email" placeholder="Your email" style="background: #1e293b; border: none; padding: 0.75rem 1rem; border-radius: 8px; color: white; flex: 1;">
-                    <button class="btn btn-primary" style="padding: 0.75rem 1rem;"><i class="fa-solid fa-paper-plane"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 CarePlus Health Systems. All rights reserved.</p>
-            <p>Made with <i class="fa-solid fa-heart" style="color: var(--accent);"></i> for a healthier world.</p>
         </div>
     </footer>
 
@@ -225,7 +308,7 @@
                             <div style="color: var(--light-text); font-size: 0.9rem; margin-bottom: 1rem;">
                                 <i class="fa-solid fa-star" style="color: #f59e0b;"></i> ${doc.experience} Experience
                             </div>
-                            <a href="register.html" class="btn btn-outline btn-sm w-full">View Profile</a>
+                            <a href="doctors.html" class="btn btn-outline btn-sm w-full">View Profile</a>
                         </div>
                     `;
                 }).join('');

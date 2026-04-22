@@ -14,8 +14,13 @@
             <a href="index.html" class="logo">
                 <i class="fa-solid fa-notes-medical"></i> CarePlus
             </a>
-            <div class="nav-links">
-                
+            <div class="nav-links" style="gap: 1rem;">
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
             </div>
         </nav>
     </header>
@@ -23,9 +28,15 @@
     <main>
         <div class="dashboard-grid">
             <aside class="sidebar">
-                <h3 id="welcomeName">Welcome, Patient</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3 id="welcomeName" style="margin: 0;">Welcome, Patient</h3>
+                    <button onclick="toggleSidebar()" class="hidden-desktop" style="background: none; border: none; font-size: 1.25rem; color: var(--light-text); cursor: pointer;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
                 <ul class="sidebar-menu">
-                    <li><a href="dashboard.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                    <li><a href="#" onclick="switchTab('overview', this)" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                    <li><a href="#" onclick="switchTab('reports', this)"><i class="fa-solid fa-file-invoice"></i> Reports & Bills</a></li>
                     <li><a href="appointment.html"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</a></li>
                     <li><a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
                 </ul>
@@ -49,7 +60,68 @@
                     </div>
                 </div>
 
-                <div class="content-card mt-4">
+                <div class="content-card mt-4" style="background: linear-gradient(135deg, rgba(13, 148, 136, 0.05), rgba(37, 99, 235, 0.05)); border: 1px solid rgba(13, 148, 136, 0.1);">
+                    <h3><i class="fa-solid fa-chart-line"></i> Health Recovery Progress</h3>
+                    <div style="height: 200px; display: flex; align-items: flex-end; gap: 1rem; padding: 2rem 0; justify-content: space-around;">
+                        <div style="width: 30px; height: 30%; background: var(--primary); border-radius: 8px 8px 0 0; opacity: 0.4;"></div>
+                        <div style="width: 30px; height: 45%; background: var(--primary); border-radius: 8px 8px 0 0; opacity: 0.6;"></div>
+                        <div style="width: 30px; height: 65%; background: var(--primary); border-radius: 8px 8px 0 0; opacity: 0.8;"></div>
+                        <div style="width: 30px; height: 85%; background: var(--primary); border-radius: 8px 8px 0 0;"></div>
+                        <div style="width: 30px; height: 100%; background: var(--accent); border-radius: 8px 8px 0 0; box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);"></div>
+                    </div>
+                    <p style="text-align: center; color: var(--light-text); font-size: 0.9rem;">Your recovery rate has improved by 15% this week! Keep it up. <i class="fa-solid fa-fire" style="color: var(--accent);"></i></p>
+                </div>
+
+                </div>
+
+                <!-- Reports Section -->
+                <div id="tab-reports" class="hidden">
+                    <div class="card-header mt-4" style="margin-bottom: 2rem;">
+                        <h2>Medical Reports & Financials</h2>
+                        <p style="color: var(--light-text);">View your health records and outstanding invoices.</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <!-- sample Reports -->
+                        <div class="content-card">
+                            <h3><i class="fa-solid fa-file-medical" style="color: var(--primary);"></i> Clinical Reports</h3>
+                            <div class="report-item" style="padding: 1rem; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong style="display: block;">Complete Blood Count (CBC)</strong>
+                                    <small style="color: var(--light-text);">Date: April 15, 2026</small>
+                                </div>
+                                <button class="btn btn-outline btn-sm">Download PDF</button>
+                            </div>
+                            <div class="report-item" style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong style="display: block;">Heart Rate Monitoring Results</strong>
+                                    <small style="color: var(--light-text);">Date: March 20, 2026</small>
+                                </div>
+                                <button class="btn btn-outline btn-sm">Download PDF</button>
+                            </div>
+                        </div>
+
+                        <!-- Sample Bills -->
+                        <div class="content-card">
+                            <h3><i class="fa-solid fa-receipt" style="color: var(--accent);"></i> Outstanding Bills</h3>
+                            <div class="bill-item" style="padding: 1rem; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong style="display: block;">Consultation Fee - Dr. Sarah Wilson</strong>
+                                    <small style="color: var(--light-text);">Inv #8821 | Status: <span style="color: var(--warning);">Pending</span></small>
+                                </div>
+                                <strong style="font-size: 1.2rem;">$120.00</strong>
+                            </div>
+                            <div class="bill-item" style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 1;">
+                                    <button class="btn btn-primary w-full" style="background: var(--accent);">Pay All Outstanding ($120.00)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-overview" class="dashboard-overview">
+                    <div class="content-card mt-4">
                     <div class="card-header">
                         <h3>My Appointments</h3>
                         <a href="appointment.html" class="btn btn-primary btn-sm">New Booking</a>
@@ -87,6 +159,7 @@
 
             loadPatientAppointments(currentUser.id);
         });
+
 
         async function loadPatientAppointments(patientId) {
             try {
@@ -151,6 +224,19 @@
             } catch (error) {
                 alert('Cancellation Failed: ' + error.message);
             }
+        }
+
+        function switchTab(tabId, element) {
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+            element.classList.add('active');
+
+            // Hide all tabs
+            document.getElementById('tab-overview').classList.add('hidden');
+            document.getElementById('tab-reports').classList.add('hidden');
+
+            // Show selected tab
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
         }
     </script>
 </body>

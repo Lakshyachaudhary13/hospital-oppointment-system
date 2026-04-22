@@ -15,7 +15,9 @@
                 <i class="fa-solid fa-notes-medical"></i> CarePlus Admin
             </a>
             <div class="nav-links">
-              
+                <div class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
             </div>
         </nav>
     </header>
@@ -23,7 +25,12 @@
     <main>
         <div class="dashboard-grid">
             <aside class="sidebar">
-                <h3>Admin Panel</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3 style="margin: 0;">Admin Panel</h3>
+                    <button onclick="toggleSidebar()" class="hidden-desktop" style="background: none; border: none; font-size: 1.25rem; color: var(--light-text); cursor: pointer;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
                 <ul class="sidebar-menu">
                     <li><a href="#" class="active" onclick="switchTab('appointments', this)"><i class="fa-solid fa-calendar-check"></i> Appointments</a></li>
                     <li><a href="#" onclick="switchTab('doctors', this)"><i class="fa-solid fa-user-doctor"></i> Manage Doctors</a></li>
@@ -144,6 +151,7 @@
             loadAllDoctors();
         });
 
+
        
         function switchTab(tabId, element) {
            
@@ -182,12 +190,12 @@
                     let actionButtons = '-';
                     if (appt.status === 'Scheduled') {
                         actionButtons = `
-                            <button class="btn btn-success btn-sm" title="Approve" onclick="updateAppointmentStatus(${appt.id}, 'Approved')" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;"><i class="fa-solid fa-check"></i></button>
-                            <button class="btn btn-danger btn-sm" title="Reject" onclick="updateAppointmentStatus(${appt.id}, 'Rejected')" style="padding: 0.25rem 0.5rem; font-size: 0.8rem; margin-left: 0.25rem;"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success btn-sm" title="Approve" onclick="updateAppointmentStatus('${appt.id}', 'Approved')" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;"><i class="fa-solid fa-check"></i></button>
+                            <button class="btn btn-danger btn-sm" title="Reject" onclick="updateAppointmentStatus('${appt.id}', 'Rejected')" style="padding: 0.25rem 0.5rem; font-size: 0.8rem; margin-left: 0.25rem;"><i class="fa-solid fa-xmark"></i></button>
                         `;
                     } else {
                         actionButtons = `
-                            <button class="btn btn-danger btn-sm" title="Delete Permanent" onclick="deleteAppointment(${appt.id})" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-danger btn-sm" title="Delete Permanent" onclick="deleteAppointment('${appt.id}')" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;"><i class="fa-solid fa-trash"></i></button>
                         `;
                     }
 
@@ -225,13 +233,14 @@
         }
 
         async function deleteAppointment(id) {
+            console.log('Admin deleting appointment:', id);
             if(!confirm('Are you sure you want to permanently delete this appointment record?')) return;
 
             try {
                 await apiCall(`/appointments/${id}`, 'DELETE');
-                loadAllAppointments(); 
-                alert('Appointment record deleted');
+                await loadAllAppointments(); 
             } catch (error) {
+                console.error('Delete Failed:', error);
                 alert('Delete Failed: ' + error.message);
             }
         }
@@ -256,7 +265,7 @@
                         <td>${doc.specialty}</td>
                         <td>${doc.experience}</td>
                         <td>
-                             <button class="btn btn-danger btn-sm" onclick="deleteDoctor(${doc.id})" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;"><i class="fa-solid fa-trash"></i></button>
+                             <button class="btn btn-danger btn-sm" onclick="deleteDoctor('${doc.id}')" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -267,13 +276,14 @@
         }
 
         async function deleteDoctor(id) {
-            if(!confirm('Are you sure you want to remove this doctor?')) return;
+            console.log('Admin deleting doctor:', id);
+            if(!confirm('Are you sure you want to remove this doctor from the system?')) return;
 
             try {
                 await apiCall(`/doctors/${id}`, 'DELETE');
-                loadAllDoctors(); 
-                alert('Doctor removed successfully');
+                await loadAllDoctors(); 
             } catch (error) {
+                console.error('Delete Failed:', error);
                 alert('Delete Failed: ' + error.message);
             }
         }

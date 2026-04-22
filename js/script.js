@@ -62,22 +62,39 @@ function checkAuth(requireRole = null) {
 function renderHeader() {
     const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
     const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
 
-    if (currentUser && navLinks) {
-        if (currentUser.role === 'admin') {
-            navLinks.innerHTML = `
-                <a href="admin.html">Dashboard</a>
-                <span class="btn btn-outline" style="cursor:pointer" onclick="logout()">Logout</span>
-            `;
-        } else {
-            navLinks.innerHTML = `
-                <a href="dashboard.html" style="margin-right: 0.5rem;">Dashboard</a>
-                <a href="appointment.html" class="btn btn-primary">Book Now</a>
-                <span class="btn btn-outline" style="cursor:pointer" onclick="logout()">Logout</span>
-            `;
-        }
+    // Remove existing profile if it exists
+    const existingProfile = document.querySelector('.user-profile-nav');
+    if (existingProfile) existingProfile.remove();
+
+    if (currentUser) {
+        const profileDiv = document.createElement('div');
+        profileDiv.className = 'user-profile-nav';
+        profileDiv.style.display = 'flex';
+        profileDiv.style.alignItems = 'center';
+        profileDiv.style.gap = '1.25rem';
+        profileDiv.style.marginRight = '1rem';
+        
+        const initials = currentUser.name.charAt(0).toUpperCase();
+        
+        profileDiv.innerHTML = `
+            <div class="notifications hidden-mobile" style="color: var(--light-text); cursor: pointer; position: relative;">
+                <i class="fa-solid fa-bell"></i>
+                <span style="position: absolute; top: -6px; right: -6px; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; border: 2px solid var(--white);"></span>
+            </div>
+            <div style="text-align: right; line-height: 1.2;" class="hidden-mobile">
+                <div style="font-weight: 700; font-size: 0.95rem; color: var(--dark);">${currentUser.name}</div>
+                <a href="${currentUser.role === 'admin' ? 'admin.html' : 'dashboard.html'}" style="font-size: 0.75rem; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">Dashboard</a>
+            </div>
+            <div style="width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; border: 2px solid var(--primary-light); box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);">
+                ${initials}
+            </div>
+        `;
+        navLinks.prepend(profileDiv);
     }
 }
+
 
 
 function logout() {
@@ -87,5 +104,45 @@ function logout() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     renderHeader();
 });
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('careplus_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('careplus_theme', newTheme);
+    
+    // Update icons if any
+    const moonIcon = document.querySelector('.theme-toggle i');
+    if (moonIcon) {
+        moonIcon.className = newTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+}
+
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+    
+    sidebar.classList.toggle('active');
+    
+    // Toggle icon across all potential menu buttons
+    const icons = document.querySelectorAll('.menu-toggle i');
+    icons.forEach(icon => {
+        if (sidebar.classList.contains('active')) {
+            icon.classList.remove('fa-equals');
+            icon.classList.add('fa-xmark');
+        } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-equals');
+        }
+    });
+}
+
