@@ -9,9 +9,9 @@ const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_U
 const CURRENT_USER_KEY = 'careplus_currentUser';
 
 // Use prefixed tables to avoid conflicts with previous project
-const USERS_TABLE = 'users';
-const DOCTORS_TABLE = 'doctors';
-const APPOINTMENTS_TABLE = 'appointments';
+const USERS_TABLE = 'hosp_users';
+const DOCTORS_TABLE = 'hosp_doctors';
+const APPOINTMENTS_TABLE = 'hosp_appointments';
 
 /**
  * Unified API call function using Supabase

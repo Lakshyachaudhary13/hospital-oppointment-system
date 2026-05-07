@@ -2,7 +2,7 @@
 -- Run this in Supabase SQL Editor
 
 -- 1. Users Table
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS hosp_users (
     id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- 2. Doctors Table
-CREATE TABLE IF NOT EXISTS doctors (
+CREATE TABLE IF NOT EXISTS hosp_doctors (
     id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     specialty TEXT NOT NULL,
@@ -26,23 +26,23 @@ CREATE TABLE IF NOT EXISTS doctors (
 );
 
 -- 3. Appointments Table
-CREATE TABLE IF NOT EXISTS appointments (
+CREATE TABLE IF NOT EXISTS hosp_appointments (
     id BIGSERIAL PRIMARY KEY,
-    patient_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
-    doctor_id BIGINT REFERENCES doctors(id) ON DELETE CASCADE,
+    patient_id BIGINT REFERENCES hosp_users(id) ON DELETE CASCADE,
+    doctor_id BIGINT REFERENCES hosp_doctors(id) ON DELETE CASCADE,
     appointment_time TEXT NOT NULL,
     status TEXT DEFAULT 'Scheduled' CHECK (status IN ('Scheduled', 'Approved', 'Rejected', 'Cancelled')),
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- 4. Insert Default Users
-INSERT INTO users (name, email, password, role) VALUES
+INSERT INTO hosp_users (name, email, password, role) VALUES
     ('Demo Patient', 'patient@example.com', 'password', 'patient'),
     ('System Admin', 'admin@careplus.com', 'admin', 'admin')
 ON CONFLICT (email) DO NOTHING;
 
 -- 5. Insert Default Doctors
-INSERT INTO doctors (name, specialty, experience, image, bio, education, achievements, rating) VALUES
+INSERT INTO hosp_doctors (name, specialty, experience, image, bio, education, achievements, rating) VALUES
     (
         'Dr. Sarah Wilson', 'Cardiologist', '12 Years',
         'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=400&h=400&fit=crop',
@@ -77,11 +77,11 @@ INSERT INTO doctors (name, specialty, experience, image, bio, education, achieve
     );
 
 -- 6. Enable Row Level Security (RLS) - Allow public read/write for demo
-ALTER TABLE users ENABLE ROW LEVEL SECURITY;
-ALTER TABLE doctors ENABLE ROW LEVEL SECURITY;
-ALTER TABLE appointments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hosp_users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hosp_doctors ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hosp_appointments ENABLE ROW LEVEL SECURITY;
 
 -- Allow all operations for demo (you can restrict later)
-CREATE POLICY "Allow all users" ON users FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all doctors" ON doctors FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all appointments" ON appointments FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all users" ON hosp_users FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all doctors" ON hosp_doctors FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all appointments" ON hosp_appointments FOR ALL USING (true) WITH CHECK (true);
