@@ -74,6 +74,54 @@ INSERT INTO hosp_doctors (name, specialty, experience, image, bio, education, ac
         'MD from Yale School of Medicine, Dermatology Training at NYU',
         ARRAY['Certified by American Board of Dermatology', 'Innovator in Laser Skin Therapy', 'Author of "The Modern Skin Guide"'],
         4.7
+    ),
+    (
+        'Dr. Ananya Sharma', 'Gynecologist', '10 Years',
+        'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop',
+        'Dr. Ananya is an expert in maternal-fetal medicine and women''s reproductive health.',
+        'MD from AIIMS Delhi, Fellowship at Royal College of OBGYN',
+        ARRAY['Best Women Healthcare Advocate 2023', 'Expert in robotic-assisted surgery'],
+        4.8
+    ),
+    (
+        'Dr. Robert Vance', 'Orthopedic Surgeon', '18 Years',
+        'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop',
+        'Specializing in sports medicine and joint replacements with a focus on minimally invasive techniques.',
+        'MD from Johns Hopkins, Orthopedic Surgery Residency at Cleveland Clinic',
+        ARRAY['Successfully performed 2000+ joint replacements', 'Chief Surgeon at Global Ortho Center'],
+        4.9
+    ),
+    (
+        'Dr. Lisa Wang', 'Ophthalmologist', '7 Years',
+        'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=400&h=400&fit=crop',
+        'Dedicated to preserving vision through advanced laser eye surgery and glaucoma management.',
+        'MD from Stanford University, Ophthalmology Fellowship at UCLA',
+        ARRAY['Innovator in LASIK technology', 'Published researcher in eye pathology'],
+        4.7
+    ),
+    (
+        'Dr. David Miller', 'Oncologist', '14 Years',
+        'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop',
+        'A leading researcher in immunotherapy and personalized cancer treatment protocols.',
+        'MD/PhD from Yale, Oncology Fellowship at MD Anderson Cancer Center',
+        ARRAY['Director of Cancer Research Institute', 'Recipient of National Medical Excellence Award'],
+        4.9
+    ),
+    (
+        'Dr. Sophia Patel', 'Psychiatrist', '11 Years',
+        'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop',
+        'Focusing on holistic mental wellness and cognitive behavioral therapy for all age groups.',
+        'MD from University of Chicago, Psychiatry Specialty at Mount Sinai',
+        ARRAY['Author of "Mind Matters" book series', 'Expert in adolescent mental health'],
+        4.8
+    ),
+    (
+        'Dr. Kevin Foster', 'Dentist', '9 Years',
+        'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&h=400&fit=crop',
+        'Expert in cosmetic dentistry and restorative oral surgery for a perfect smile.',
+        'DDS from Harvard School of Dental Medicine',
+        ARRAY['Leading expert in dental implants', 'Certified in sedation dentistry'],
+        4.6
     );
 
 -- 6. Enable Row Level Security (RLS) - Allow public read/write for demo
