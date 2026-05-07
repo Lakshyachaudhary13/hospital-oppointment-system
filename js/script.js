@@ -4,20 +4,20 @@ const SUPABASE_URL = 'https://pzxwgimfeoqfdjhkogsp.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_fPSOGc0rOV_3iQfT7pgS6Q_K4fLWIQ7';
 
 // Initialize Supabase Client
-const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 const CURRENT_USER_KEY = 'careplus_currentUser';
 
 // Use prefixed tables to avoid conflicts with previous project
-const USERS_TABLE = 'hosp_users';
-const DOCTORS_TABLE = 'hosp_doctors';
-const APPOINTMENTS_TABLE = 'hosp_appointments';
+const USERS_TABLE = 'users';
+const DOCTORS_TABLE = 'doctors';
+const APPOINTMENTS_TABLE = 'appointments';
 
 /**
  * Unified API call function using Supabase
  */
 async function apiCall(endpoint, method = 'GET', body = null) {
-    if (!supabase) {
+    if (!supabaseClient) {
         console.error('Supabase not initialized.');
         throw new Error('Database connection failed');
     }
@@ -25,7 +25,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
     try {
         // --- LOGIN ---
         if (endpoint === '/users/login' && method === 'POST') {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from(USERS_TABLE)
                 .select('*')
                 .eq('email', body.email)
@@ -38,7 +38,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 
         // --- REGISTER ---
         if (endpoint === '/users/register' && method === 'POST') {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from(USERS_TABLE)
                 .insert([body])
                 .select()
@@ -50,7 +50,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 
         // --- DOCTORS ---
         if (endpoint === '/doctors' && method === 'GET') {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from(DOCTORS_TABLE)
                 .select('*')
                 .order('name');
@@ -60,7 +60,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
         }
 
         if (endpoint === '/doctors' && method === 'POST') {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from(DOCTORS_TABLE)
                 .insert([body])
                 .select()
@@ -71,7 +71,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 
         if (endpoint.startsWith('/doctors/') && method === 'DELETE') {
             const id = endpoint.split('/')[2];
-            const { error } = await supabase
+            const { error } = await supabaseClient
                 .from(DOCTORS_TABLE)
                 .delete()
                 .eq('id', id);
@@ -81,7 +81,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 
         // --- APPOINTMENTS ---
         if (endpoint === '/appointments/all' && method === 'GET') {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from(APPOINTMENTS_TABLE)
                 .select(`
                     *,
@@ -102,7 +102,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 
         if (endpoint.startsWith('/appointments/patient/') && method === 'GET') {
             const patientId = endpoint.split('/')[3];
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from(APPOINTMENTS_TABLE)
                 .select(`
                     *,
@@ -129,7 +129,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
                 status: 'Scheduled'
             };
 
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from(APPOINTMENTS_TABLE)
                 .insert([payload])
                 .select()
@@ -144,7 +144,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
             const params = new URLSearchParams(endpoint.split('?')[1] || '');
             const newStatus = params.get('status') || body?.status;
 
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from(APPOINTMENTS_TABLE)
                 .update({ status: newStatus })
                 .eq('id', id)
@@ -157,7 +157,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 
         if (endpoint.startsWith('/appointments/') && method === 'DELETE') {
             const id = endpoint.split('/')[2];
-            const { error } = await supabase
+            const { error } = await supabaseClient
                 .from(APPOINTMENTS_TABLE)
                 .delete()
                 .eq('id', id);

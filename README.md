@@ -15,16 +15,18 @@ CarePlus is a modern, high-performance healthcare ecosystem designed to bridge t
 
 ### Frontend
 - **HTML5 & CSS3**: Custom styles with advanced Glassmorphism design patterns.
-- **JavaScript**: For interactive components and asynchronous API communication.
+- **JavaScript**: ES6+ for interactive components and API orchestration.
+- **Cloud SDK**: Supabase Client for direct database interaction.
 
-### Backend (Dual Architecture)
-- **Primary Logic**: Java 17 | Spring Boot Framework (RESTful Architecture).
+### Backend (Modern Architecture)
+- **Primary Persistence**: Supabase (PostgreSQL) for real-time, cloud-synchronized data.
+- **Enterprise Logic**: Java 17 | Spring Boot (Maintained for enterprise-scale extensibility).
 - **Control Layer**: Maven for build automation and dependency management.
-- **Local Dev Server**: Node.js & Express for rapid UI prototyping and JSON-based persistence.
+- **Dev Tooling**: Node.js & Express for rapid UI prototyping.
 
 ### Data Layer
-- **Relational Database**: SQL-based persistence (H2/PostgreSQL).
-- **Local Persistence**: `db.json` for lightweight development data tracking.
+- **Cloud Relational**: Supabase SQL with optimized indexing for healthcare data.
+- **Local Mocking**: `db.json` for lightweight offline development.
 
 ## 📁 Project Structure
 
@@ -56,15 +58,20 @@ hospital-appointment-system/
    cd hospital-oppointment-system
    ```
 
-2. **Frontend & Mock Server**
+2. **Database Setup (Supabase)**
+   - Create a new project on [Supabase](https://supabase.com/).
+   - Execute the schema found in `supabase_setup.sql` in the Supabase SQL Editor.
+   - Update `SUPABASE_URL` and `SUPABASE_KEY` in `js/script.js`.
+
+3. **Frontend & Local Server**
    ```bash
    npm install
-   # Start the Express server
+   # Start the Express server to serve static files
    node server.js
    ```
    The application will be available at `http://localhost:8080`.
 
-3. **Backend Services (Spring Boot)**
+4. **Optional: Backend Services (Spring Boot)**
    ```bash
    cd backend
    mvn spring-boot:run
