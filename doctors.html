@@ -4,157 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Doctors | CarePlus</title>
+    <title>Our Doctors | CarePlus Healthcare</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .doctors-header {
-            padding: 100px 0 60px;
-            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('images/hero-bg.png');
-            background-size: cover;
-            text-align: center;
-        }
-
-        .search-filter-container {
-            margin-top: -30px;
-            margin-bottom: 50px;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            background: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .search-box input {
-            border: none;
-            padding: 10px;
-            width: 100%;
-            outline: none;
-            font-size: 1rem;
-        }
-
-        .search-box i {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .filters {
-            display: flex;
-            gap: 10px;
-        }
-
-        .filter-btn {
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 8px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .doctor-list-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            padding-bottom: 5rem;
-        }
-    </style>
 </head>
 
 <body>
     <header>
         <nav>
             <a href="index.html" class="logo">
-                <i class="fa-solid fa-notes-medical"></i> CarePlus
+                <i class="fa-solid fa-notes-medical"></i>
+                <span>CarePlus</span>
             </a>
-            <div class="nav-links" style="gap: 1.5rem;">
-                <div class="hidden-mobile" style="display: flex; gap: 1rem; align-items: center;">
-                    <a href="login.html" style="font-weight: 600; color: var(--dark); text-decoration: none;">Login</a>
-                    <a href="register.html" class="btn btn-signup btn-sm" style="padding: 0.5rem 1.25rem;">Sign Up</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="doctors.html" class="active">Doctors</a>
+                <a href="#services">Services</a>
+                <div class="auth-buttons hidden-mobile">
+                    <a href="login.html" class="btn btn-ghost btn-sm">Login</a>
+                    <a href="register.html" class="btn btn-signup btn-sm">Sign Up</a>
                 </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
                 <div class="menu-toggle" onclick="toggleSidebar()">
                     <i class="fa-solid fa-equals"></i>
                 </div>
             </div>
         </nav>
     </header>
-
+    
     <aside class="sidebar">
-        <div style="padding: 1.5rem; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 1rem;">
-            <button onclick="toggleSidebar()" style="background: var(--bg-color); border: 1px solid rgba(0,0,0,0.1); width: 40px; height: 40px; border-radius: 10px; font-size: 1.25rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition);">
+        <div class="sidebar-close">
+            <button onclick="toggleSidebar()" class="theme-toggle" style="background: var(--primary-soft); color: var(--primary); width: 40px; height: 40px;">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
         <ul class="sidebar-menu">
             <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
             <li><a href="doctors.html" class="active"><i class="fa-solid fa-user-doctor"></i> Explore Doctors</a></li>
-            <li><a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Login</a></li>
+            <li><a href="login.html"><i class="fa-solid fa-right-to-bracket"></i> Login</a></li>
             <li><a href="register.html"><i class="fa-solid fa-user-plus"></i> Create Account</a></li>
         </ul>
     </aside>
 
     <main>
-        <section class="doctors-header">
-            <div class="container">
-                <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">Meet Our <span style="color: var(--primary);">Specialists</span></h1>
-                <p style="color: var(--light-text); font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Connect with our world-class medical team. Each doctor is board-certified and brings years of expertise to your care.</p>
+        <section class="section-padding" style="background: var(--dark); color: white; padding: 6rem 2rem 10rem;">
+            <div class="container" style="text-align: center;">
+                <h1 style="font-size: 4rem; margin-bottom: 1.5rem;">Meet Our <span class="text-gradient">Specialists</span></h1>
+                <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Connect with our world-class medical team. Each expert is board-certified and brings years of dedicated clinical experience to your care.</p>
             </div>
         </section>
 
         <section class="container">
-            <div class="search-filter-container">
+            <div class="search-container">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="doctorSearch" placeholder="Search by name or specialty...">
+                    <input type="text" id="doctorSearch" placeholder="Search by name, specialty, or hospital...">
                 </div>
             </div>
 
             <div class="doctor-list-grid" id="fullDoctorGrid">
-                <!-- Data loaded here -->
-                <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                <!-- Loading State -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 5rem;">
                     <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--primary);"></i>
-                    <p style="margin-top: 1rem;">Fetching our medical experts...</p>
+                    <p class="text-muted" style="margin-top: 1.5rem;">Connecting to medical network...</p>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <a href="index.html" class="footer-logo">
-                    <i class="fa-solid fa-notes-medical"></i> CarePlus
-                </a>
-                <p style="color: #94a3b8;">Premium medical consultations at your fingertips.</p>
+        <div class="container">
+            <div class="footer-grid" style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 4rem; padding-bottom: 4rem;">
+                <div>
+                    <a href="index.html" class="footer-logo">
+                        <i class="fa-solid fa-notes-medical"></i>
+                        <span>CarePlus</span>
+                    </a>
+                    <p class="text-muted" style="margin-top: 1.5rem;">Leading the way in digital healthcare. Our mission is to provide accessible, high-quality medical services to everyone.</p>
+                </div>
+                <div>
+                    <h4 style="color: white; margin-bottom: 1.5rem;">Platform</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.75rem;"><a href="doctors.html" style="color: var(--dark-muted); text-decoration: none;">Find Doctors</a></li>
+                        <li style="margin-bottom: 0.75rem;"><a href="login.html" style="color: var(--dark-muted); text-decoration: none;">Book Slot</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: white; margin-bottom: 1.5rem;">Legal</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.75rem;"><a href="#" style="color: var(--dark-muted); text-decoration: none;">Privacy Policy</a></li>
+                        <li style="margin-bottom: 0.75rem;"><a href="#" style="color: var(--dark-muted); text-decoration: none;">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: white; margin-bottom: 1.5rem;">Contact</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.75rem; color: var(--dark-muted);"><i class="fa-solid fa-phone" style="color: var(--primary); margin-right: 0.5rem;"></i> +1 234 567 890</li>
+                        <li style="margin-bottom: 0.75rem; color: var(--dark-muted);"><i class="fa-solid fa-envelope" style="color: var(--primary); margin-right: 0.5rem;"></i> help@careplus.com</li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="doctors.html">Find Doctors</a></li>
-                    <li><a href="register.html">Get Started</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 CarePlus Health Systems. All rights reserved.</p>
         </div>
     </footer>
 

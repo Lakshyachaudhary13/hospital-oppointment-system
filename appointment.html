@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Appointment | CarePlus</title>
+    <title>Book Appointment | CarePlus Healthcare</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
 
-    <header>
+<body>
+    <header class="header-dashboard">
         <nav>
             <a href="index.html" class="logo">
-                <i class="fa-solid fa-notes-medical"></i> CarePlus
+                <i class="fa-solid fa-notes-medical"></i>
+                <span>CarePlus</span>
             </a>
             <div class="nav-links">
-                
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="user-profile-mini">
+                    <span id="userNameHeader">Patient</span>
+                    <div class="avatar-sm" id="userAvatarHeader">P</div>
+                </div>
             </div>
         </nav>
     </header>
@@ -23,82 +31,57 @@
     <main>
         <div class="dashboard-grid">
             <aside class="sidebar">
-                <h3 id="welcomeName">Welcome, Patient</h3>
+                <h3 id="welcomeName">Portal Access</h3>
                 <ul class="sidebar-menu">
-                    <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-                    <li><a href="appointment.html" class="active"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</a></li>
-                    <li><a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                    <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+                    <li><a href="appointment.html" class="active"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a></li>
+                    <li><a href="doctors.html"><i class="fa-solid fa-user-doctor"></i> Medical Team</a></li>
+                    <li style="margin-top: auto;"><a href="#" onclick="logout()" style="color: #ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a></li>
                 </ul>
             </aside>
 
             <div class="dashboard-content">
-                <h2>Book highly rated doctors</h2>
-                
-               
-                <div class="content-card mt-4" id="step1">
-                    <div class="card-header">
-                        <h3>1. Select a Doctor</h3>
-                    </div>
-                    <div class="doctor-grid" id="doctorGrid">
-                        
-                    </div>
+                <div style="margin-bottom: 2.5rem;">
+                    <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Schedule an <span class="text-gradient">Appointment</span></h2>
+                    <p class="text-muted">Select your preferred doctor and book a convenient time slot.</p>
                 </div>
 
-                <!-- Doctor Profile Modal -->
-                <div id="doctorProfileModal" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <span class="close" onclick="closeProfileModal()">&times;</span>
-                            <div id="modalDoctorAvatar" class="doctor-avatar" style="width: 120px; height: 120px; margin: 0 auto 1rem; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-size: 2rem;"></div>
-                            <h2 id="modalDoctorName" style="margin-bottom: 0.5rem;"></h2>
-                            <p id="modalDoctorSpec" style="font-weight: 600; font-size: 1.1rem; opacity: 0.9;"></p>
-                        </div>
-                        <div class="modal-body">
-                            <div class="profile-section">
-                                <h4><i class="fa-solid fa-user-doctor"></i> About Doctor</h4>
-                                <p id="modalDoctorBio"></p>
-                            </div>
-                            <div class="profile-section">
-                                <h4><i class="fa-solid fa-graduation-cap"></i> Education</h4>
-                                <p id="modalDoctorEdu"></p>
-                            </div>
-                            <div class="profile-section">
-                                <h4><i class="fa-solid fa-award"></i> Key Achievements</h4>
-                                <ul class="achievement-list" id="modalDoctorAchievements"></ul>
-                            </div>
-                            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                                <button class="btn btn-outline w-full" onclick="closeProfileModal()">Close</button>
-                                <button id="modalBookBtn" class="btn btn-primary w-full">Proceed to Booking</button>
+                <div class="content-card" id="step1">
+                    <div class="card-header">
+                        <h3>1. Select Medical Professional</h3>
+                    </div>
+                    <div style="padding: 2rem;">
+                        <div class="doctor-list-grid" id="doctorGrid">
+                            <!-- Loading state -->
+                            <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                                <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2.5rem; color: var(--primary);"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="content-card mt-4 hidden" id="step2">
+
+                <div class="content-card hidden" id="step2">
                     <div class="card-header">
-                        <h3>2. Choose Date & Time</h3>
-                        <button class="btn btn-outline btn-sm" onclick="goBackToStep1()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                        <h3>2. Appointment Configuration</h3>
+                        <button class="btn btn-ghost btn-sm" onclick="goBackToStep1()"><i class="fa-solid fa-arrow-left"></i> Change Doctor</button>
                     </div>
-                    <div style="padding: 1.5rem;">
-                        <div id="selectedDoctorInfo" style="margin-bottom: 1.5rem; padding: 1rem; background: #F9FAFB; border-radius: 8px; border-left: 4px solid var(--primary);">
-                            
+                    <div style="padding: 2.5rem;">
+                        <div id="selectedDoctorInfo" style="margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--light); border-radius: var(--radius-xl); border: 1px solid var(--light-muted);">
+                            <!-- Selected doctor details -->
                         </div>
 
-                        <form id="bookingForm">
+                        <form id="bookingForm" style="max-width: 600px;">
                             <input type="hidden" id="doctorId">
-                            <input type="hidden" id="doctorName">
-                            <input type="hidden" id="doctorSpec">
-
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                                 <div class="form-group">
-                                    <label for="bookDate">Preferred Date</label>
+                                    <label for="bookDate">Consultation Date</label>
                                     <input type="date" id="bookDate" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="bookTime">Preferred Time</label>
-                                    
+                                    <label for="bookTime">Available Slot</label>
                                     <select id="bookTime" required>
-                                        <option value="" disabled selected>Select a time slot</option>
+                                        <option value="" disabled selected>Choose a time...</option>
                                         <option value="09:00 AM">09:00 AM</option>
                                         <option value="10:00 AM">10:00 AM</option>
                                         <option value="11:30 AM">11:30 AM</option>
@@ -109,30 +92,62 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="bookReason">Reason for visit</label>
-                                <textarea id="bookReason" rows="3" placeholder="Briefly describe your symptoms or reason for visit" required></textarea>
+                            <div class="form-group" style="margin-bottom: 2rem;">
+                                <label for="bookReason">Reason for Consultation</label>
+                                <textarea id="bookReason" rows="4" placeholder="Describe your symptoms or medical concern..." required></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-full">Confirm Booking Request</button>
+                            <button type="submit" class="btn btn-primary" style="padding: 1rem 3rem;">Confirm Booking <i class="fa-solid fa-check-circle" style="margin-left: 0.5rem;"></i></button>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
 
+    <div id="doctorProfileModal" class="modal">
+        <div class="auth-container" style="max-width: 600px; padding: 0; overflow: hidden;">
+            <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 3rem 2rem; text-align: center; position: relative;">
+                <button onclick="closeProfileModal()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.7;">&times;</button>
+                <div id="modalDoctorAvatar" class="doctor-avatar" style="width: 120px; height: 120px; margin: 0 auto 1.5rem; border: 4px solid rgba(255,255,255,0.3); box-shadow: var(--shadow-xl);"></div>
+                <h2 id="modalDoctorName" style="font-size: 2.25rem; margin-bottom: 0.5rem; color: white;"></h2>
+                <p id="modalDoctorSpec" style="font-weight: 600; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem;"></p>
+            </div>
+            <div style="padding: 2.5rem;">
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 1.1rem;"><i class="fa-solid fa-user-md" style="color: var(--primary);"></i> Professional Profile</h4>
+                    <p id="modalDoctorBio" class="text-muted" style="line-height: 1.7; font-size: 0.95rem;"></p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem;">
+                    <div>
+                        <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 1.1rem;"><i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i> Education</h4>
+                        <p id="modalDoctorEdu" class="text-muted" style="font-size: 0.95rem;"></p>
+                    </div>
+                    <div>
+                        <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 1.1rem;"><i class="fa-solid fa-award" style="color: var(--primary);"></i> Achievements</h4>
+                        <ul class="achievement-list" id="modalDoctorAchievements" style="font-size: 0.95rem;"></ul>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-outline flex-1" onclick="closeProfileModal()">Go Back</button>
+                    <button id="modalBookBtn" class="btn btn-primary flex-1">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/script.js"></script>
     <script>
-       
         checkAuth('patient');
 
         document.addEventListener('DOMContentLoaded', () => {
             const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
-            document.getElementById('welcomeName').textContent = `Welcome, ${currentUser.name.split(' ')[0]}`;
+            if (currentUser) {
+                document.getElementById('userNameHeader').textContent = currentUser.name;
+                document.getElementById('userAvatarHeader').textContent = currentUser.name.charAt(0);
+                document.getElementById('welcomeName').textContent = `Welcome, ${currentUser.name.split(' ')[0]}`;
+            }
 
-            
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('bookDate').setAttribute('min', today);
 
@@ -148,25 +163,23 @@
                 doctors.forEach(doc => {
                     const div = document.createElement('div');
                     div.className = 'doctor-card';
+                    div.style.cursor = 'pointer';
                     div.onclick = () => openProfileModal(doc);
                     
                     const initials = doc.name.replace('Dr. ', '').substring(0,2).toUpperCase();
                     const avatarContent = doc.image 
-                        ? `<img src="${doc.image}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #eef2ff;">`
+                        ? `<img src="${doc.image}" style="width: 100%; height: 100%; object-fit: cover;">`
                         : initials;
                     
                     div.innerHTML = `
                         <div class="doctor-avatar">${avatarContent}</div>
                         <div class="doctor-name">${doc.name}</div>
                         <div class="doctor-spec">${doc.specialty}</div>
-                        <div style="margin-bottom: 1.5rem; color: var(--light-text); font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                            <span><i class="fa-solid fa-briefcase-medical"></i> ${doc.experience}</span>
-                            <span>•</span>
-                            <span style="color: #f59e0b;"><i class="fa-solid fa-star"></i> ${doc.rating || '5.0'}</span>
+                        <div style="margin-bottom: 1.5rem; color: var(--dark-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <span><i class="fa-solid fa-certificate" style="color: var(--primary);"></i> ${doc.experience}</span>
+                            <span style="color: #f59e0b;"><i class="fa-solid fa-star"></i> ${doc.rating || '4.9'}</span>
                         </div>
-                        <button class="btn btn-outline btn-sm w-full">
-                            View Profile
-                        </button>
+                        <button class="btn btn-ghost btn-sm w-full">View Full Profile</button>
                     `;
                     grid.appendChild(div);
                 });
@@ -185,20 +198,20 @@
             
             document.getElementById('modalDoctorName').textContent = doc.name;
             document.getElementById('modalDoctorSpec').textContent = `${doc.specialty} • ${doc.experience}`;
-            document.getElementById('modalDoctorBio').textContent = doc.bio || `${doc.name} is a highy experienced ${doc.specialty} with ${doc.experience} of medical expertise.`;
-            document.getElementById('modalDoctorEdu').textContent = doc.education || 'Medical Degree from Accredited University';
+            document.getElementById('modalDoctorBio').textContent = doc.bio || `${doc.name} is a leading expert in ${doc.specialty} with over ${doc.experience} of clinical excellence.`;
+            document.getElementById('modalDoctorEdu').textContent = doc.education || 'MD from Harvard Medical School';
             
             const achieveList = document.getElementById('modalDoctorAchievements');
             achieveList.innerHTML = '';
-            (doc.achievements || ['Board Certified Specialist', 'Top Rated Healthcare Provider']).forEach(ach => {
+            (doc.achievements || ['Board Certified', 'Excellence in Care Award']).forEach(ach => {
                 const li = document.createElement('li');
-                li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${ach}`;
+                li.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${ach}`;
                 achieveList.appendChild(li);
             });
 
             document.getElementById('modalBookBtn').onclick = () => {
                 closeProfileModal();
-                selectDoctor(doc.id, doc.name, doc.specialty);
+                selectDoctor(doc);
             };
 
             modal.style.display = 'flex';
@@ -208,7 +221,6 @@
             document.getElementById('doctorProfileModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('doctorProfileModal');
             if (event.target == modal) {
@@ -216,17 +228,23 @@
             }
         }
 
-        function selectDoctor(id, name, specialty) {
+        function selectDoctor(doc) {
             document.getElementById('step1').classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
 
-            document.getElementById('doctorId').value = id;
-            document.getElementById('doctorName').value = name;
-            document.getElementById('doctorSpec').value = specialty;
+            document.getElementById('doctorId').value = doc.id;
+            
+            const initials = doc.name.replace('Dr. ', '').substring(0,2).toUpperCase();
+            const avatarContent = doc.image 
+                ? `<img src="${doc.image}" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">`
+                : initials;
 
             document.getElementById('selectedDoctorInfo').innerHTML = `
-                <strong>Booking appointment with:</strong><br>
-                ${name} - <em>${specialty}</em>
+                <div class="avatar-sm" style="width: 60px; height: 60px; background: var(--primary-soft); color: var(--primary); font-weight: 700;">${avatarContent}</div>
+                <div>
+                    <h4 style="font-size: 1.1rem; margin-bottom: 0.25rem;">${doc.name}</h4>
+                    <p class="text-muted" style="font-size: 0.9rem;">${doc.specialty} Specialist</p>
+                </div>
             `;
         }
 
@@ -243,9 +261,8 @@
             const doctorId = document.getElementById('doctorId').value;
             const date = document.getElementById('bookDate').value;
             const time = document.getElementById('bookTime').value;
+            const reason = document.getElementById('bookReason').value;
             
-            // Format: YYYY-MM-DDTHH:mm:SS
-            // Simple mapping for demo: 09:00 AM -> 09:00:00
             let time24 = time.includes('PM') && !time.startsWith('12') ? 
                          (parseInt(time) + 12) : 
                          (time.startsWith('12') && time.includes('AM') ? '00' : time.split(':')[0].padStart(2, '0'));
@@ -253,14 +270,14 @@
             const isoTime = `${date}T${time24}:${time.split(':')[1].substring(0,2)}:00`;
 
             try {
-                await apiCall(`/appointments/book?patientId=${currentUser.id}&doctorId=${doctorId}&time=${isoTime}`, 'POST');
-                alert('Appointment booked successfully!');
+                await apiCall(`/appointments/book?patientId=${currentUser.id}&doctorId=${doctorId}&time=${isoTime}&reason=${encodeURIComponent(reason)}`, 'POST');
+                alert('Appointment successfully scheduled!');
                 window.location.href = 'dashboard.html';
             } catch (error) {
                 alert('Booking Failed: ' + error.message);
             }
         });
-
     </script>
 </body>
+
 </html>

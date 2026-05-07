@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarePlus | Hospital Appointment System</title>
+    <title>CarePlus | Intelligent Healthcare Management System</title>
+    <meta name="description"
+        content="Book appointments with top specialists, manage your health records, and experience world-class healthcare with CarePlus.">
     <link rel="stylesheet" href="css/style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -15,12 +16,16 @@
     <header>
         <nav>
             <a href="index.html" class="logo">
-                <i class="fa-solid fa-notes-medical"></i> CarePlus
+                <i class="fa-solid fa-notes-medical"></i>
+                <span>CarePlus</span>
             </a>
-            <div class="nav-links" style="gap: 1.5rem;">
-                <div class="hidden-mobile" style="display: flex; gap: 1rem; align-items: center;">
-                    <a href="login.html" style="font-weight: 600; color: var(--dark); text-decoration: none;">Login</a>
-                    <a href="register.html" class="btn btn-signup btn-sm" style="padding: 0.5rem 1.25rem;">Sign Up</a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="doctors.html">Doctors</a>
+                <a href="#services">Services</a>
+                <div class="auth-buttons hidden-mobile">
+                    <a href="login.html" class="btn btn-ghost btn-sm">Login</a>
+                    <a href="register.html" class="btn btn-signup btn-sm">Sign Up</a>
                 </div>
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
                     <i class="fa-solid fa-moon"></i>
@@ -33,8 +38,10 @@
     </header>
 
     <aside class="sidebar">
-        <div style="padding: 1.5rem; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 1rem;">
-            <button onclick="toggleSidebar()" style="background: var(--bg-color); border: 1px solid rgba(0,0,0,0.1); width: 40px; height: 40px; border-radius: 10px; font-size: 1.25rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition);">
+        <div
+            style="padding: 1.5rem; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 1rem;">
+            <button onclick="toggleSidebar()"
+                style="background: var(--bg-color); border: 1px solid rgba(0,0,0,0.1); width: 40px; height: 40px; border-radius: 10px; font-size: 1.25rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition);">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
@@ -49,45 +56,74 @@
     <main>
         <section class="hero">
             <div class="hero-content">
-                <h1>Healthcare <span>Simplified</span>,<br>Appointment Personalized.</h1>
-                <p>Experience the next generation of healthcare management. Connect with world-class specialists, manage
-                    your health timeline, and book appointments in seconds.</p>
+                <span class="badge"
+                    style="background: var(--primary-soft); color: var(--primary); padding: 0.5rem 1rem; border-radius: var(--radius-full); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 1.5rem;">Next-Gen
+                    Healthcare</span>
+                <h1>Healthcare <span class="text-gradient">Simplified</span>,<br>Care Personalized.</h1>
+                <p>Experience the future of medical management. Connect with top specialists, track your health journey,
+                    and book appointments in seconds.</p>
                 <div class="hero-actions">
-                    <a href="doctors.html" class="btn btn-primary">Book Appointment</a>
+                    <a href="doctors.html" class="btn btn-primary">
+                        Book Appointment
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                     <a href="#services" class="btn btn-outline">Our Services</a>
                 </div>
-
+                <div class="hero-trust" style="margin-top: 3rem; display: flex; align-items: center; gap: 1rem;">
+                    <div class="trust-avatars" style="display: flex; margin-right: 0.5rem;">
+                        <img src="https://i.pravatar.cc/40?u=1"
+                            style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid white; margin-right: -10px;">
+                        <img src="https://i.pravatar.cc/40?u=2"
+                            style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid white; margin-right: -10px;">
+                        <img src="https://i.pravatar.cc/40?u=3"
+                            style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid white;">
+                    </div>
+                    <p style="margin-bottom: 0; font-size: 0.9rem; font-weight: 600;">Trusted by <span
+                            style="color: var(--primary);">10k+</span> patients</p>
+                </div>
             </div>
             <div class="hero-image">
-                <img src="images/hero.png" alt="CarePlus Virtual Consultation Illustration">
+                <img src="images/hero.png" alt="CarePlus Healthcare Illustration"
+                    style="width: 100%; border-radius: var(--radius-2xl);">
             </div>
         </section>
 
         <section id="features" class="section-padding">
-            <div class="container" style="text-align: center;">
-                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Experience <span
-                        style="color: var(--primary);">Better Health</span></h2>
-                <p style="color: var(--light-text); font-size: 1.1rem; margin-bottom: 4rem;">We combine technology with
-                    human empathy to deliver world-class care.</p>
+            <div class="container">
+                <div class="section-header" style="text-align: center; max-width: 700px; margin: 0 auto 4rem;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Experience <span class="text-gradient">Better
+                            Health</span></h2>
+                    <p class="text-muted">We combine cutting-edge technology with human empathy to deliver world-class
+                        medical care at your fingertips.</p>
+                </div>
 
                 <div class="features-grid">
                     <div class="feature-card">
-                        <i class="fa-solid fa-calendar-check"></i>
+                        <div class="icon-box"
+                            style="width: 60px; height: 60px; background: var(--primary-soft); color: var(--primary); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 1.5rem;">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
                         <h3>Instant Booking</h3>
-                        <p>Schedule your visit with any of our specialists in under 60 seconds with our seamless
-                            booking system.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fa-solid fa-user-doctor"></i>
-                        <h3>Expert Care</h3>
-                        <p>Access a network of over 500+ board-certified specialists across 40+ medical departments.
+                        <p>Schedule your visit with any specialist in under 60 seconds with our smart booking engine.
                         </p>
                     </div>
                     <div class="feature-card">
-                        <i class="fa-solid fa-shield-halved"></i>
+                        <div class="icon-box"
+                            style="width: 60px; height: 60px; background: var(--accent-soft); color: var(--accent); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 1.5rem;">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <h3>Expert Care</h3>
+                        <p>Access a network of 500+ board-certified specialists across all major medical departments.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-box"
+                            style="width: 60px; height: 60px; background: #e0f2fe; color: #0ea5e9; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 1.5rem;">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
                         <h3>Secure Records</h3>
-                        <p>Your health data is protected with enterprise-grade encryption and strictly follows patient
-                            privacy laws.</p>
+                        <p>Your health data is protected with enterprise-grade encryption and strict privacy protocols.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -113,31 +149,37 @@
                 </div>
             </div>
         </section>
-        <section id="services" style="padding: 10rem 0 5rem; background: var(--bg-color);">
-            <div class="container section-header" style="text-align: center; margin-bottom: 5rem;">
-                <span style="color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Our Specialities</span>
-                <h2 style="font-size: 3rem; margin-top: 1rem;">World-Class Healthcare Services</h2>
-                <div style="width: 80px; height: 4px; background: var(--primary); margin: 2rem auto;"></div>
-            </div>
+        <section id="services" class="section-padding" style="background: var(--light);">
             <div class="container">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem;">
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                <div class="section-header" style="text-align: center; max-width: 700px; margin: 0 auto 5rem;">
+                    <span
+                        style="color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Our
+                        Specialities</span>
+                    <h2 style="font-size: 3rem; margin-top: 1rem;">World-Class Healthcare Services</h2>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="feature-card">
+                        <div class="icon-box" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i
+                                class="fa-solid fa-heart-pulse"></i></div>
                         <h3>Cardiology</h3>
                         <p>Expert care for your heart with advanced diagnostic and treatment protocols.</p>
                     </div>
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-brain"></i></div>
+                    <div class="feature-card">
+                        <div class="icon-box" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i
+                                class="fa-solid fa-brain"></i></div>
                         <h3>Neurology</h3>
                         <p>Providing specialized treatment for complex brain and nervous system disorders.</p>
                     </div>
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-child"></i></div>
+                    <div class="feature-card">
+                        <div class="icon-box" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i
+                                class="fa-solid fa-child"></i></div>
                         <h3>Pediatrics</h3>
                         <p>Compassionate healthcare tailored specifically for the growth and well-being of children.</p>
                     </div>
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-hospital-user"></i></div>
+                    <div class="feature-card">
+                        <div class="icon-box" style="font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem;"><i
+                                class="fa-solid fa-hospital-user"></i></div>
                         <h3>Telemedicine</h3>
                         <p>Access high-quality medical consultations from the safety and comfort of your home.</p>
                     </div>
@@ -145,32 +187,38 @@
             </div>
         </section>
 
-        <section id="how-it-works" class="section-padding" style="background: white;">
+        <section id="how-it-works" class="section-padding">
             <div class="container">
-                <div class="section-header" style="text-align: center; margin-bottom: 5rem;">
-                    <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Simple Steps to <span style="color: var(--primary);">Your Better Health</span></h2>
-                    <p style="color: var(--light-text); font-size: 1.1rem;">Revolutionizing your medical journey with a seamless 3-step digital process.</p>
+                <div class="section-header" style="text-align: center; max-width: 700px; margin: 0 auto 5rem;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Simple Steps to <span class="text-gradient">Your
+                            Better Health</span></h2>
+                    <p class="text-muted">Revolutionizing your medical journey with a seamless digital process.</p>
                 </div>
-                
-                <div class="steps-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; position: relative;">
-                    <div class="step-line" style="position: absolute; top: 45px; left: 10%; right: 10%; height: 2px; background: #e2e8f0; z-index: 1;"></div>
-                    
-                    <div class="step-card" style="text-align: center; position: relative; z-index: 2;">
-                        <div class="step-number" style="width: 90px; height: 90px; background: var(--white); border: 2px solid var(--primary); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; margin: 0 auto 2rem; box-shadow: 0 10px 20px rgba(13, 148, 136, 0.1);">01</div>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Select Specialist</h3>
-                        <p style="color: var(--light-text); line-height: 1.6;">Browse through our handpicked directory of 500+ board-certified medical experts across 40+ specialties.</p>
+
+                <div class="steps-container"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+                    <div class="step-card" style="text-align: center;">
+                        <div class="step-number"
+                            style="width: 80px; height: 80px; background: var(--white); border: 2px solid var(--primary); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 2rem; box-shadow: var(--shadow-md);">
+                            01</div>
+                        <h3>Select Specialist</h3>
+                        <p class="text-muted">Browse through our directory of board-certified medical experts.</p>
                     </div>
 
-                    <div class="step-card" style="text-align: center; position: relative; z-index: 2;">
-                        <div class="step-number" style="width: 90px; height: 90px; background: var(--primary); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; margin: 0 auto 2rem; box-shadow: 0 20px 30px rgba(13, 148, 136, 0.3);">02</div>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Book a Slot</h3>
-                        <p style="color: var(--light-text); line-height: 1.6;">Pick a date and time that fits your schedule. Our real-time engine ensures no overlaps or double-bookings.</p>
+                    <div class="step-card" style="text-align: center;">
+                        <div class="step-number"
+                            style="width: 80px; height: 80px; background: var(--primary); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 2rem; box-shadow: var(--shadow-premium);">
+                            02</div>
+                        <h3>Book a Slot</h3>
+                        <p class="text-muted">Pick a date and time that fits your schedule perfectly.</p>
                     </div>
 
-                    <div class="step-card" style="text-align: center; position: relative; z-index: 2;">
-                        <div class="step-number" style="width: 90px; height: 90px; background: var(--white); border: 2px solid var(--primary); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; margin: 0 auto 2rem; box-shadow: 0 10px 20px rgba(13, 148, 136, 0.1);">03</div>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Get Consulted</h3>
-                        <p style="color: var(--light-text); line-height: 1.6;">Visit the clinic or connect virtually. Your medical history is automatically updated in your personal timeline.</p>
+                    <div class="step-card" style="text-align: center;">
+                        <div class="step-number"
+                            style="width: 80px; height: 80px; background: var(--white); border: 2px solid var(--primary); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 2rem; box-shadow: var(--shadow-md);">
+                            03</div>
+                        <h3>Get Consulted</h3>
+                        <p class="text-muted">Visit the clinic or connect virtually for expert consultation.</p>
                     </div>
                 </div>
             </div>
@@ -195,90 +243,132 @@
         <section id="faq" class="section-padding" style="background: rgba(13,148,136,0.02);">
             <div class="container">
                 <div class="section-header" style="text-align: center; margin-bottom: 5rem;">
-                    <h2 style="font-size: 2.5rem; font-weight: 800;">Frequently Asked <span style="color: var(--primary);">Questions</span></h2>
+                    <h2 style="font-size: 2.5rem; font-weight: 800;">Frequently Asked <span
+                            style="color: var(--primary);">Questions</span></h2>
                     <p style="color: var(--light-text);">Everything you need to know about our healthcare services.</p>
                 </div>
-                
+
                 <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
                     <div class="content-card" style="padding: 1.5rem; cursor: pointer;">
                         <h4 style="display: flex; justify-content: space-between; align-items: center;">
                             How do I book an emergency appointment?
                             <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
                         </h4>
-                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">You can call our 24/7 emergency hotline at +1 234 567 890 or use the instant booking feature for the earliest available slot.</p>
+                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">You can call our 24/7
+                            emergency hotline at +1 234 567 890 or use the instant booking feature for the earliest
+                            available slot.</p>
                     </div>
                     <div class="content-card" style="padding: 1.5rem; cursor: pointer;">
                         <h4 style="display: flex; justify-content: space-between; align-items: center;">
                             Can I access my medical reports online?
                             <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
                         </h4>
-                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">Yes! Log in to your patient dashboard and navigate to the "Reports & Bills" tab to view and download all your clinical records.</p>
+                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">Yes! Log in to your
+                            patient dashboard and navigate to the "Reports & Bills" tab to view and download all your
+                            clinical records.</p>
                     </div>
                     <div class="content-card" style="padding: 1.5rem; cursor: pointer;">
                         <h4 style="display: flex; justify-content: space-between; align-items: center;">
                             Is my health data secure on CarePlus?
                             <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
                         </h4>
-                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">Absolutely. We use enterprise-level AES-256 encryption and follow all international healthcare privacy standards.</p>
+                        <p style="margin-top: 1rem; color: var(--light-text); font-size: 0.95rem;">Absolutely. We use
+                            enterprise-level AES-256 encryption and follow all international healthcare privacy
+                            standards.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="cta" class="section-padding" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 40px; margin-bottom: 4rem; color: white;">
-            <div class="container" style="text-align: center;">
-                <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem;">Ready to Prioritize Your Health?</h2>
-                <p style="font-size: 1.25rem; margin-bottom: 3rem; opacity: 0.9; max-width: 700px; margin-left: auto; margin-right: auto;">Join CarePlus today and get access to the best medical professionals in the country from the comfort of your home.</p>
-                <div class="hero-actions" style="justify-content: center;">
-                    <a href="register.html" class="btn" style="background: white; color: var(--primary); font-weight: 800;">Get Started Now</a>
-                    <a href="doctors.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">Explore Doctors</a>
+        <section id="cta" class="section-padding">
+            <div class="container"
+                style="background: var(--dark); border-radius: var(--radius-2xl); padding: 5rem 2rem; position: relative; overflow: hidden;">
+                <div
+                    style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: var(--primary); opacity: 0.1; border-radius: 50%;">
+                </div>
+                <div
+                    style="position: absolute; bottom: -50px; left: -50px; width: 150px; height: 150px; background: var(--accent); opacity: 0.1; border-radius: 50%;">
                 </div>
 
+                <div style="text-align: center; position: relative; z-index: 1;">
+                    <h2 style="font-size: 3rem; color: white; margin-bottom: 1.5rem;">Ready to Prioritize Your Health?
+                    </h2>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem; max-width: 600px; margin: 0 auto 3rem;">
+                        Join CarePlus today and access world-class medical experts from the comfort of your home.</p>
+                    <div class="hero-actions" style="justify-content: center;">
+                        <a href="register.html" class="btn btn-primary">Get Started Now</a>
+                        <a href="doctors.html" class="btn btn-outline"
+                            style="color: white; border-color: rgba(255,255,255,0.2);">Explore Doctors</a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <a href="index.html" class="footer-logo"><i class="fa-solid fa-notes-medical"></i> CarePlus</a>
-                    <p style="color: #94a3b8; line-height: 1.8; margin-top: 1rem;">Leading the way in digital healthcare. Our mission is to provide accessible, high-quality medical services to everyone, everywhere through innovation and compassion.</p>
+            <div class="footer-grid"
+                style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 4rem; padding-bottom: 4rem;">
+                <div>
+                    <a href="index.html" class="footer-logo">
+                        <i class="fa-solid fa-notes-medical"></i>
+                        <span>CarePlus</span>
+                    </a>
+                    <p class="text-muted" style="margin-top: 1.5rem;">Leading the way in digital healthcare. Our mission
+                        is to provide accessible, high-quality medical services to everyone.</p>
                     <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <a href="#" style="color: white; font-size: 1.25rem;"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#" style="color: white; font-size: 1.25rem;"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" style="color: white; font-size: 1.25rem;"><i class="fa-brands fa-linkedin"></i></a>
-                        <a href="#" style="color: white; font-size: 1.25rem;"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="btn btn-sm btn-ghost"
+                            style="padding: 0; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white;"><i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-sm btn-ghost"
+                            style="padding: 0; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white;"><i
+                                class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="btn btn-sm btn-ghost"
+                            style="padding: 0; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white;"><i
+                                class="fa-brands fa-linkedin-in"></i></a>
                     </div>
                 </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="doctors.html">Find Doctors</a></li>
-                        <li><a href="login.html">Patient Login</a></li>
-                        <li><a href="#services">Our Services</a></li>
+                <div>
+                    <h4 style="color: white; margin-bottom: 1.5rem;">Platform</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.75rem;"><a href="doctors.html"
+                                style="color: var(--dark-muted); text-decoration: none; transition: 0.3s;">Find
+                                Doctors</a></li>
+                        <li style="margin-bottom: 0.75rem;"><a href="login.html"
+                                style="color: var(--dark-muted); text-decoration: none; transition: 0.3s;">Book Slot</a>
+                        </li>
+                        <li style="margin-bottom: 0.75rem;"><a href="#services"
+                                style="color: var(--dark-muted); text-decoration: none; transition: 0.3s;">Services</a>
+                        </li>
                     </ul>
                 </div>
-                <div class="footer-links">
-                    <h4>Legal Info</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Use</a></li>
-                        <li><a href="#">Patient Rights</a></li>
+                <div>
+                    <h4 style="color: white; margin-bottom: 1.5rem;">Legal</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.75rem;"><a href="#"
+                                style="color: var(--dark-muted); text-decoration: none; transition: 0.3s;">Privacy
+                                Policy</a></li>
+                        <li style="margin-bottom: 0.75rem;"><a href="#"
+                                style="color: var(--dark-muted); text-decoration: none; transition: 0.3s;">Terms of
+                                Service</a></li>
                     </ul>
                 </div>
-                <div class="footer-links">
-                    <h4>Office Info</h4>
-                    <ul>
-                        <li><a href="#"><i class="fa-solid fa-location-dot"></i> 123 Health Ave, NY</a></li>
-                        <li><a href="#"><i class="fa-solid fa-phone"></i> +1 234 567 890</a></li>
-                        <li><a href="#"><i class="fa-solid fa-envelope"></i> help@careplus.com</a></li>
+                <div>
+                    <h4 style="color: white; margin-bottom: 1.5rem;">Contact</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.75rem; color: var(--dark-muted); display: flex; gap: 0.75rem;"><i
+                                class="fa-solid fa-location-dot" style="color: var(--primary);"></i> 123 Health Ave, NY
+                        </li>
+                        <li style="margin-bottom: 0.75rem; color: var(--dark-muted); display: flex; gap: 0.75rem;"><i
+                                class="fa-solid fa-phone" style="color: var(--primary);"></i> +1 234 567 890</li>
+                        <li style="margin-bottom: 0.75rem; color: var(--dark-muted); display: flex; gap: 0.75rem;"><i
+                                class="fa-solid fa-envelope" style="color: var(--primary);"></i> help@careplus.com</li>
                     </ul>
                 </div>
             </div>
-            <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; text-align: center; color: #64748b; font-size: 0.9rem;">
-                <p>&copy; 2026 CarePlus Hospital System. All rights reserved.</p>
+            <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; text-align: center;">
+                <p class="text-muted" style="font-size: 0.85rem;">&copy; 2026 CarePlus Hospital System. All rights
+                    reserved.</p>
             </div>
         </div>
     </footer>

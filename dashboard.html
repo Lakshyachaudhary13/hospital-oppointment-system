@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Dashboard | CarePlus</title>
+    <title>Patient Dashboard | CarePlus Healthcare</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
 
-    <header>
+<body>
+    <header class="header-dashboard">
         <nav>
             <a href="index.html" class="logo">
-                <i class="fa-solid fa-notes-medical"></i> CarePlus
+                <i class="fa-solid fa-notes-medical"></i>
+                <span>CarePlus</span>
             </a>
-            <div class="nav-links" style="gap: 1rem;">
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+            <div class="nav-links">
+                <button class="theme-toggle" onclick="toggleTheme()">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <div class="menu-toggle" onclick="toggleSidebar()">
-                    <i class="fa-solid fa-bars"></i>
+                <div class="user-profile-mini">
+                    <span id="userNameHeader">Patient</span>
+                    <div class="avatar-sm" id="userAvatarHeader">P</div>
                 </div>
             </div>
         </nav>
@@ -28,120 +31,134 @@
     <main>
         <div class="dashboard-grid">
             <aside class="sidebar">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h3 id="welcomeName" style="margin: 0;">Welcome, Patient</h3>
-                    <button onclick="toggleSidebar()" class="hidden-desktop" style="background: none; border: none; font-size: 1.25rem; color: var(--light-text); cursor: pointer;">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
+                <h3 id="welcomeName">Portal Access</h3>
                 <ul class="sidebar-menu">
-                    <li><a href="#" onclick="switchTab('overview', this)" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-                    <li><a href="#" onclick="switchTab('reports', this)"><i class="fa-solid fa-file-invoice"></i> Reports & Bills</a></li>
-                    <li><a href="appointment.html"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</a></li>
-                    <li><a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                    <li><a href="#" onclick="switchTab('overview', this)" class="active"><i
+                                class="fa-solid fa-chart-pie"></i> Overview</a></li>
+                    <li><a href="#" onclick="switchTab('reports', this)"><i class="fa-solid fa-file-medical"></i> Health
+                            Records</a></li>
+                    <li><a href="appointment.html"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a></li>
+                    <li><a href="doctors.html"><i class="fa-solid fa-user-doctor"></i> Medical Team</a></li>
+                    <li style="margin-top: auto;"><a href="#" onclick="logout()" style="color: #ef4444;"><i
+                                class="fa-solid fa-right-from-bracket"></i> Sign Out</a></li>
                 </ul>
             </aside>
 
             <div class="dashboard-content">
-                <h2>Overview</h2>
-                
-                <div class="status-cards">
-                    <div class="stat-card">
-                        <h4>Total Appointments</h4>
-                        <div class="value" id="totalAppt">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Approved</h4>
-                        <div class="value" id="approvedAppt" style="color: var(--secondary)">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Pending</h4>
-                        <div class="value" id="pendingAppt" style="color: var(--warning)">0</div>
-                    </div>
-                </div>
-
-                <div class="content-card mt-4" style="background: linear-gradient(135deg, rgba(13, 148, 136, 0.05), rgba(37, 99, 235, 0.05)); border: 1px solid rgba(13, 148, 136, 0.1);">
-                    <h3><i class="fa-solid fa-chart-line"></i> Health Recovery Progress</h3>
-                    <div style="height: 200px; display: flex; align-items: flex-end; gap: 1rem; padding: 2rem 0; justify-content: space-around;">
-                        <div style="width: 30px; height: 30%; background: var(--primary); border-radius: 8px 8px 0 0; opacity: 0.4;"></div>
-                        <div style="width: 30px; height: 45%; background: var(--primary); border-radius: 8px 8px 0 0; opacity: 0.6;"></div>
-                        <div style="width: 30px; height: 65%; background: var(--primary); border-radius: 8px 8px 0 0; opacity: 0.8;"></div>
-                        <div style="width: 30px; height: 85%; background: var(--primary); border-radius: 8px 8px 0 0;"></div>
-                        <div style="width: 30px; height: 100%; background: var(--accent); border-radius: 8px 8px 0 0; box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);"></div>
-                    </div>
-                    <p style="text-align: center; color: var(--light-text); font-size: 0.9rem;">Your recovery rate has improved by 15% this week! Keep it up. <i class="fa-solid fa-fire" style="color: var(--accent);"></i></p>
-                </div>
-
-                </div>
-
-                <!-- Reports Section -->
-                <div id="tab-reports" class="hidden">
-                    <div class="card-header mt-4" style="margin-bottom: 2rem;">
-                        <h2>Medical Reports & Financials</h2>
-                        <p style="color: var(--light-text);">View your health records and outstanding invoices.</p>
+                <div id="tab-overview">
+                    <div style="margin-bottom: 2.5rem;">
+                        <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Health <span
+                                class="text-gradient">Dashboard</span></h2>
+                        <p class="text-muted">Welcome back. Here's a summary of your recent medical activity.</p>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                        <!-- sample Reports -->
-                        <div class="content-card">
-                            <h3><i class="fa-solid fa-file-medical" style="color: var(--primary);"></i> Clinical Reports</h3>
-                            <div class="report-item" style="padding: 1rem; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <strong style="display: block;">Complete Blood Count (CBC)</strong>
-                                    <small style="color: var(--light-text);">Date: April 15, 2026</small>
-                                </div>
-                                <button class="btn btn-outline btn-sm">Download PDF</button>
-                            </div>
-                            <div class="report-item" style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <strong style="display: block;">Heart Rate Monitoring Results</strong>
-                                    <small style="color: var(--light-text);">Date: March 20, 2026</small>
-                                </div>
-                                <button class="btn btn-outline btn-sm">Download PDF</button>
-                            </div>
+                    <div class="status-cards">
+                        <div class="stat-card">
+                            <h4>Total Visits</h4>
+                            <div class="value" id="totalAppt">0</div>
                         </div>
-
-                        <!-- Sample Bills -->
-                        <div class="content-card">
-                            <h3><i class="fa-solid fa-receipt" style="color: var(--accent);"></i> Outstanding Bills</h3>
-                            <div class="bill-item" style="padding: 1rem; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <strong style="display: block;">Consultation Fee - Dr. Sarah Wilson</strong>
-                                    <small style="color: var(--light-text);">Inv #8821 | Status: <span style="color: var(--warning);">Pending</span></small>
-                                </div>
-                                <strong style="font-size: 1.2rem;">$120.00</strong>
-                            </div>
-                            <div class="bill-item" style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                                <div style="flex: 1;">
-                                    <button class="btn btn-primary w-full" style="background: var(--accent);">Pay All Outstanding ($120.00)</button>
-                                </div>
-                            </div>
+                        <div class="stat-card">
+                            <h4>Confirmed</h4>
+                            <div class="value" id="approvedAppt" style="color: var(--primary)">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Pending</h4>
+                            <div class="value" id="pendingAppt" style="color: #f59e0b">0</div>
                         </div>
                     </div>
-                </div>
 
-                <div id="tab-overview" class="dashboard-overview">
-                    <div class="content-card mt-4">
-                    <div class="card-header">
-                        <h3>My Appointments</h3>
-                        <a href="appointment.html" class="btn btn-primary btn-sm">New Booking</a>
+                    <div class="content-card" style="margin-bottom: 2.5rem;">
+                        <div class="card-header">
+                            <h3>Health Recovery Progress</h3>
+                            <div class="badge badge-approved"><i class="fa-solid fa-arrow-up"></i> +15% Weekly</div>
+                        </div>
+                        <div class="progress-chart">
+                            <div class="progress-bar" style="height: 30%" data-label="Week 1"></div>
+                            <div class="progress-bar" style="height: 45%" data-label="Week 2"></div>
+                            <div class="progress-bar" style="height: 60%" data-label="Week 3"></div>
+                            <div class="progress-bar" style="height: 75%" data-label="Week 4"></div>
+                            <div class="progress-bar active" style="height: 90%" data-label="Current"></div>
+                        </div>
+                        <p style="text-align: center; margin-top: 1.5rem;" class="text-muted">Your recovery rate is
+                            trending upwards. Keep following your prescribed routine! <i class="fa-solid fa-fire"
+                                style="color: var(--accent);"></i></p>
                     </div>
-                    <div class="table-responsive">
-                        <table id="appointmentsTable">
-                            <thead>
+
+                    <div class="content-card" style="margin-bottom: 2.5rem;">
+                        <div class="card-header">
+                            <h3>Upcoming Appointments</h3>
+                            <a href="appointment.html" class="btn btn-primary btn-sm">Schedule New</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="appointmentsTable">
+                                <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Doctor</th>
                                         <th>Specialty</th>
                                         <th>Date & Time</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th style="text-align: right;">Action</th>
                                     </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-reports" class="hidden">
+                    <div style="margin-bottom: 2.5rem;">
+                        <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Medical <span
+                                class="text-gradient">Records</span></h2>
+                        <p class="text-muted">Access your clinical reports, prescriptions, and financial summaries.</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="content-card">
+                            <div class="card-header">
+                                <h3>Clinical Reports</h3>
+                            </div>
+                            <div style="padding: 1rem;">
+                                <div
+                                    style="padding: 1.25rem; border-bottom: 1px solid var(--light-muted); display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong style="display: block; margin-bottom: 0.25rem;">Blood Panel
+                                            Analysis</strong>
+                                        <small class="text-muted">April 15, 2026 • General Health</small>
+                                    </div>
+                                    <button class="btn btn-ghost btn-sm"><i class="fa-solid fa-download"></i></button>
+                                </div>
+                                <div
+                                    style="padding: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong style="display: block; margin-bottom: 0.25rem;">Cardiology
+                                            Screening</strong>
+                                        <small class="text-muted">March 20, 2026 • Diagnostic</small>
+                                    </div>
+                                    <button class="btn btn-ghost btn-sm"><i class="fa-solid fa-download"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-card">
+                            <div class="card-header">
+                                <h3>Billing Summary</h3>
+                            </div>
+                            <div style="padding: 2rem;">
+                                <div
+                                    style="background: var(--light); padding: 1.5rem; border-radius: var(--radius-xl); margin-bottom: 1.5rem;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                        <span class="text-muted">Pending Balance</span>
+                                        <strong style="font-size: 1.25rem;">$120.00</strong>
+                                    </div>
+                                    <button class="btn btn-primary w-full">Settle Balance</button>
+                                </div>
+                                <p style="font-size: 0.875rem; text-align: center;" class="text-muted"><i
+                                        class="fa-solid fa-shield-halved"></i> Secure Payment Gateway Active</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,21 +167,22 @@
 
     <script src="js/script.js"></script>
     <script>
-       
         checkAuth('patient');
 
         document.addEventListener('DOMContentLoaded', () => {
             const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
-            document.getElementById('welcomeName').textContent = `Welcome, ${currentUser.name.split(' ')[0]}`;
-
-            loadPatientAppointments(currentUser.id);
+            if (currentUser) {
+                document.getElementById('userNameHeader').textContent = currentUser.name;
+                document.getElementById('userAvatarHeader').textContent = currentUser.name.charAt(0);
+                document.getElementById('welcomeName').textContent = `Welcome, ${currentUser.name.split(' ')[0]}`;
+                loadPatientAppointments(currentUser.id);
+            }
         });
-
 
         async function loadPatientAppointments(patientId) {
             try {
                 const myAppointments = await apiCall(`/appointments/patient/${patientId}`);
-                
+
                 document.getElementById('totalAppt').textContent = myAppointments.length;
                 document.getElementById('approvedAppt').textContent = myAppointments.filter(a => a.status === 'Approved').length;
                 document.getElementById('pendingAppt').textContent = myAppointments.filter(a => a.status === 'Scheduled').length;
@@ -173,23 +191,116 @@
                 tbody.innerHTML = '';
 
                 if (myAppointments.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding: 2rem;">No appointments found. <a href="appointment.html">Book one now.</a></td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 4rem;">
+                        <p class="text-muted" style="margin-bottom: 1.5rem;">You have no scheduled appointments.</p>
+                        <a href="appointment.html" class="btn btn-primary btn-sm">Book Your First Visit</a>
+                    </td></tr>`;
                     return;
                 }
 
                 myAppointments.reverse().forEach(appt => {
                     let badgeClass = 'badge-pending';
-                    if (appt.status === 'Approved' || appt.status === 'Completed') badgeClass = 'badge-approved';
+                    if (appt.status === 'Approved') badgeClass = 'badge-approved';
                     if (appt.status === 'Cancelled' || appt.status === 'Rejected') badgeClass = 'badge-rejected';
-                    
+
                     const dateObj = new Date(appt.appointmentTime);
-                    const formattedDate = dateObj.toLocaleDateString();
+                    const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                     const formattedTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    
+
                     const docPhoto = appt.doctor?.image || 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop';
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <img src="${docPhoto}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                                <div style="font-weight: 700;">${appt.doctor?.name || 'Medical Officer'}</div>
+                            </div>
+                        </td>
+                        <td class="text-muted">${appt.doctor?.specialty || 'General'}</td>
+                        <td>
+                            <div style="font-weight: 600;">${formattedDate}</div>
+                            <small class="text-muted">${formattedTime}</small>
+                        </td>
+                        <td><span class="badge ${badgeClass}">${appt.status}</span></td>
+                        <td style="text-align: right;">
+                            <button class="btn btn-ghost btn-sm" onclick="cancelAppointment(${appt.id})" title="Cancel Appointment">
+                                <i class="fa-solid fa-trash-can" style="color: #ef4444;"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Dashboard Error:', error);
+            }
+        }
+
+        async function cancelAppointment(id) {
+            if (!confirm('Are you sure you want to cancel this appointment?')) return;
+            try {
+                await apiCall(`/appointments/${id}`, 'DELETE');
+                const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+                loadPatientAppointments(currentUser.id);
+            } catch (error) {
+                alert('Action Failed: ' + error.message);
+            }
+        }
+
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('tab-overview').classList.add('hidden');
+            document.getElementById('tab-reports').classList.add('hidden');
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>
+
+<script src="js/script.js"></script>
+<script>
+
+    checkAuth('patient');
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+        document.getElementById('welcomeName').textContent = `Welcome, ${currentUser.name.split(' ')[0]}`;
+
+        loadPatientAppointments(currentUser.id);
+    });
+
+
+    async function loadPatientAppointments(patientId) {
+        try {
+            const myAppointments = await apiCall(`/appointments/patient/${patientId}`);
+
+            document.getElementById('totalAppt').textContent = myAppointments.length;
+            document.getElementById('approvedAppt').textContent = myAppointments.filter(a => a.status === 'Approved').length;
+            document.getElementById('pendingAppt').textContent = myAppointments.filter(a => a.status === 'Scheduled').length;
+
+            const tbody = document.querySelector('#appointmentsTable tbody');
+            tbody.innerHTML = '';
+
+            if (myAppointments.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding: 2rem;">No appointments found. <a href="appointment.html">Book one now.</a></td></tr>`;
+                return;
+            }
+
+            myAppointments.reverse().forEach(appt => {
+                let badgeClass = 'badge-pending';
+                if (appt.status === 'Approved' || appt.status === 'Completed') badgeClass = 'badge-approved';
+                if (appt.status === 'Cancelled' || appt.status === 'Rejected') badgeClass = 'badge-rejected';
+
+                const dateObj = new Date(appt.appointmentTime);
+                const formattedDate = dateObj.toLocaleDateString();
+                const formattedTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                const docPhoto = appt.doctor?.image || 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
                         <td>#${appt.id}</td>
                         <td>
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -206,38 +317,39 @@
                             </button>
                         </td>
                     `;
-                    tbody.appendChild(tr);
-                });
-            } catch (error) {
-                console.error('Failed to load appointments:', error);
-            }
+                tbody.appendChild(tr);
+            });
+        } catch (error) {
+            console.error('Failed to load appointments:', error);
         }
+    }
 
-        async function cancelAppointment(id) {
-            if(!confirm('Are you sure you want to cancel and remove this appointment?')) return;
+    async function cancelAppointment(id) {
+        if (!confirm('Are you sure you want to cancel and remove this appointment?')) return;
 
-            try {
-                await apiCall(`/appointments/${id}`, 'DELETE');
-                const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
-                loadPatientAppointments(currentUser.id);
-                alert('Appointment cancelled successfully');
-            } catch (error) {
-                alert('Cancellation Failed: ' + error.message);
-            }
+        try {
+            await apiCall(`/appointments/${id}`, 'DELETE');
+            const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+            loadPatientAppointments(currentUser.id);
+            alert('Appointment cancelled successfully');
+        } catch (error) {
+            alert('Cancellation Failed: ' + error.message);
         }
+    }
 
-        function switchTab(tabId, element) {
-            // Update sidebar active state
-            document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
-            element.classList.add('active');
+    function switchTab(tabId, element) {
+        // Update sidebar active state
+        document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+        element.classList.add('active');
 
-            // Hide all tabs
-            document.getElementById('tab-overview').classList.add('hidden');
-            document.getElementById('tab-reports').classList.add('hidden');
+        // Hide all tabs
+        document.getElementById('tab-overview').classList.add('hidden');
+        document.getElementById('tab-reports').classList.add('hidden');
 
-            // Show selected tab
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-        }
-    </script>
+        // Show selected tab
+        document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+    }
+</script>
 </body>
+
 </html>
