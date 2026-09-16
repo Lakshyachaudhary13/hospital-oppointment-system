@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarePlus — MBA Final Project Defense & Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #070F1E;
+            --bg-slide: #0B192C;
+            --bg-card: rgba(19, 38, 68, 0.7);
+            --border-card: rgba(0, 212, 178, 0.2);
+            --primary: #00D4B2;
+            --primary-glow: rgba(0, 212, 178, 0.35);
+            --accent: #38BDF8;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --text-highlight: #38BDF8;
+            --success: #10B981;
+            --gradient-title: linear-gradient(135deg, #FFFFFF 0%, #00D4B2 100%);
+            --gradient-accent: linear-gradient(135deg, #00D4B2 0%, #38BDF8 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+        }
+
+        /* Top Navigation Header */
+        .top-bar {
+            height: 54px;
+            background: rgba(11, 25, 44, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 50;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #fff;
+        }
+
+        .brand-logo i {
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .brand-badge {
+            background: rgba(0, 212, 178, 0.15);
+            color: var(--primary);
+            border: 1px solid var(--border-card);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .top-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-ctrl {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ctrl:hover {
+            background: rgba(0, 212, 178, 0.15);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .btn-ctrl.active {
+            background: var(--primary);
+            color: #070F1E;
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Presentation Workspace */
+        .presentation-container {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Slide Stage */
+        .slide-stage {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 212, 178, 0.05) 0%, rgba(7, 15, 30, 0.8) 70%);
+        }
+
+        .slide-card {
+            width: 100%;
+            max-width: 1200px;
+            height: calc(100vh - 150px);
+            max-height: 680px;
+            background: var(--bg-slide);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px 48px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 178, 0.08);
+            display: none;
+            flex-direction: column;
+            position: relative;
+            animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+        }
+
+        .slide-card.active {
+            display: flex;
+        }
+
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: scale(0.98) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Slide Header */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .slide-meta-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .slide-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .slide-counter-badge {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Slide Components */
+        .hero-slide {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 212, 178, 0.12);
+            border: 1px solid var(--border-card);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: var(--gradient-title);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 32px auto;
+            line-height: 1.6;
+        }
+
+        .hero-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 10px;
+        }
+
+        .meta-box {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: left;
+        }
+
+        .meta-box .lbl {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .meta-box .val {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* 3-Column Cards Grid */
+        .cards-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            height: 100%;
+        }
+
+        .cards-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            height: 100%;
+        }
+
+        .cards-grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 18px;
+            height: 100%;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(0, 212, 178, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(0, 212, 178, 0.12);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .card-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.88rem;
+            color: #CBD5E1;
+            line-height: 1.45;
+        }
+
+        .card-list li {
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .card-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        /* Metric Callouts */
+        .metric-callout-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(19, 38, 68, 0.9), rgba(11, 25, 44, 0.95));
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            padding: 16px 18px;
+            text-align: center;
+        }
+
+        .metric-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+
+        .metric-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* Tables */
+        .pro-table-wrapper {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .pro-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.86rem;
+            text-align: left;
+        }
+
+        .pro-table th {
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .pro-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #E2E8F0;
+        }
+
+        .pro-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pro-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-gain {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        /* Key Takeaway Banner */
+        .takeaway-banner {
+            background: rgba(0, 212, 178, 0.08);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 10px 10px 0;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.86rem;
+            color: #E2E8F0;
+            margin-top: auto;
+        }
+
+        .takeaway-banner i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        /* Speaker Notes Drawer */
+        .speaker-notes-drawer {
+            width: 380px;
+            background: #091322;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 24px;
+            z-index: 40;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            animation: slideInRight 0.3s ease;
+        }
+
+        .speaker-notes-drawer.open {
+            display: flex;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .notes-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notes-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .defense-timer {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timer-ctrls {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .notes-content-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .notes-section-lbl {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .notes-speech-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #E2E8F0;
+        }
+
+        .notes-viva-box {
+            background: rgba(0, 212, 178, 0.08);
+            border: 1px solid var(--border-card);
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        .viva-q {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .viva-a {
+            font-size: 0.82rem;
+            color: #F3F4F6;
+            line-height: 1.5;
+        }
+
+        /* Bottom Controls Bar */
+        .bottom-bar {
+            height: 60px;
+            background: rgba(11, 25, 44, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 50;
+        }
+
+        .progress-container {
+            flex: 1;
+            max-width: 400px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 20px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-accent);
+            width: 6.66%;
+            transition: width 0.3s ease;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-nav {
+            background: rgba(0, 212, 178, 0.1);
+            border: 1px solid var(--border-card);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:hover {
+            background: var(--primary);
+            color: #070F1E;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            background: transparent;
+        }
+
+        /* Slide Overview Modal */
+        .slide-overview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 15, 30, 0.95);
+            backdrop-filter: blur(16px);
+            z-index: 100;
+            display: none;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .slide-overview-modal.open {
+            display: block;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            max-width: 1300px;
+            margin: 40px auto 0 auto;
+        }
+
+        .overview-thumb {
+            background: var(--bg-slide);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .overview-thumb:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 212, 178, 0.15);
+        }
+
+        .overview-thumb.active {
+            border: 2px solid var(--primary);
+            background: rgba(0, 212, 178, 0.1);
+        }
+
+        .thumb-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .thumb-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header class="top-bar">
+        <div class="brand-logo">
+            <i class="fa-solid fa-hospital-user"></i>
+            <span>CarePlus</span>
+            <span class="brand-badge">MBA Defense Deck</span>
+        </div>
+
+        <div class="top-controls">
+            <button class="btn-ctrl" id="btn-overview" title="Slide Overview (Grid)">
+                <i class="fa-solid fa-table-cells-large"></i> Overview
+            </button>
+            <button class="btn-ctrl" id="btn-notes" title="Toggle Presenter Speech Notes & Timer (Press 'N')">
+                <i class="fa-solid fa-clipboard-user"></i> Speaker Notes
+            </button>
+            <button class="btn-ctrl" id="btn-live-app" onclick="window.open('../index.html', '_blank')" title="Launch Live Prototype System">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live App
+            </button>
+            <button class="btn-ctrl" id="btn-fullscreen" title="Toggle Fullscreen (Press 'F')">
+                <i class="fa-solid fa-expand"></i> Fullscreen
+            </button>
+        </div>
+    </header>
+
+    <!-- Presentation Workspace -->
+    <main class="presentation-container">
+        
+        <!-- Center Slide Stage -->
+        <section class="slide-stage">
+            
+            <!-- Slide 1: Title & Executive Introduction -->
+            <div class="slide-card active" data-slide="1">
+                <div class="hero-slide">
+                    <div class="hero-badge">
+                        <i class="fa-solid fa-graduation-cap"></i> MBA Final Capstone Defense & Project Presentation
+                    </div>
+                    <h1 class="hero-title">CarePlus</h1>
+                    <h2 class="hero-subtitle">
+                        Strategic Digital Healthcare Transformation & Resource Optimization System: Maximizing Clinical Capacity, Streamlining Outpatient Workflows, and Elevating Patient Lifetime Value
+                    </h2>
+
+                    <div class="hero-meta-grid">
+                        <div class="meta-box">
+                            <div class="lbl">Candidate Name</div>
+                            <div class="val">Lakshya Kumar</div>
+                            <div class="lbl" style="margin-top: 6px;">Program / Specialization</div>
+                            <div class="val">MBA (Operations & HealthTech)</div>
+                        </div>
+                        <div class="meta-box">
+                            <div class="lbl">Department & Academic Year</div>
+                            <div class="val">Dept. of Management Studies</div>
+                            <div class="lbl" style="margin-top: 6px;">Academic Session</div>
+                            <div class="val">2025 – 2026</div>
+                        </div>
+                        <div class="meta-box">
+                            <div class="lbl">Core Research Theme</div>
+                            <div class="val">Lean Healthcare Operations & HealthTech</div>
+                            <div class="lbl" style="margin-top: 6px;">Faculty Guide / Mentor</div>
+                            <div class="val">[Supervisor / Professor Name]</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <span><strong>Executive Focus:</strong> Demonstrating how service process re-engineering and accessible web technology maximize hospital capacity utilization and elevate patient satisfaction.</span>
+                </div>
+            </div>
+
+            <!-- Slide 2: Executive Summary & Market Opportunity -->
+            <div class="slide-card" data-slide="2">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-chart-line"></i> Market Dynamics & Strategic Growth</div>
+                        <h2 class="slide-title">Executive Summary & Healthcare Market Opportunity</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 02 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="metric-callout-row">
+                        <div class="metric-card">
+                            <div class="metric-number">18.6%</div>
+                            <div class="metric-label">Global HealthTech CAGR</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">73%</div>
+                            <div class="metric-label">Prefer Online Self-Booking</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">₹45k Cr</div>
+                            <div class="metric-label">Digital Health Sector TAM</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">85%</div>
+                            <div class="metric-label">Potential Efficiency Gain</div>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid-3">
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-globe"></i></div>
+                            <div class="card-title">Macro HealthTech Growth</div>
+                            <ul class="card-list">
+                                <li>Global Digital Health expanding to $660B+ by 2030.</li>
+                                <li>Accelerated by national initiatives like <strong>Ayushman Bharat Digital Mission (ABDM)</strong>.</li>
+                                <li>Rapid smartphone adoption expanding digital healthcare accessibility nationwide.</li>
+                            </ul>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                            <div class="card-title">Digital-First Patient Expectations</div>
+                            <ul class="card-list">
+                                <li>Modern patients value speed, scheduling transparency, and 24/7 self-service.</li>
+                                <li>Over 73% of patients prefer instant online booking over manual phone calls.</li>
+                                <li>Seamless digital touchpoints directly elevate institutional brand loyalty.</li>
+                            </ul>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-building-columns"></i></div>
+                            <div class="card-title">Strategic Value Creation</div>
+                            <ul class="card-list">
+                                <li>Outpatient digitization is a primary operational lever for healthcare providers.</li>
+                                <li>Maximizes daily specialist throughput and optimizes reception staffing productivity.</li>
+                                <li>Creates durable competitive differentiation in urban healthcare clusters.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span><strong>Key Takeaway:</strong> Outpatient digital transformation empowers hospitals to lead in patient satisfaction and operational excellence.</span>
+                </div>
+            </div>
+
+            <!-- Slide 3: The Operational Opportunity -->
+            <div class="slide-card" data-slide="3">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-arrows-to-circle"></i> Service Operations Opportunity</div>
+                        <h2 class="slide-title">The Operational Opportunity: Capacity Maximization & Efficiency</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 03 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-2">
+                        <div class="feature-card" style="border-left: 4px solid var(--primary);">
+                            <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                            <div class="card-title">1. Patient Experience (CX) Leadership</div>
+                            <ul class="card-list">
+                                <li><strong>Frictionless 24/7 Scheduling:</strong> Instant self-service booking from any device at any time.</li>
+                                <li><strong>Complete Credential Transparency:</strong> Verified doctor profiles, clinical qualifications, and patient ratings.</li>
+                                <li><strong>Predictable, Comfortable Visits:</strong> Eliminates waiting delays through confirmed, structured appointment windows.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" style="border-left: 4px solid var(--accent);">
+                            <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <div class="card-title">2. Clinical Capacity Optimization</div>
+                            <ul class="card-list">
+                                <li><strong>Full Specialist Utilization:</strong> Maximizes doctor schedule density to ensure clinical hours deliver maximum care.</li>
+                                <li><strong>High Attendance Reliability:</strong> Verified digital bookings and automated reminders ensure dependable attendance.</li>
+                                <li><strong>Front-Desk Productivity:</strong> Streamlines routine triage so administrative staff can focus on premium patient care.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="feature-card" style="background: linear-gradient(135deg, rgba(0, 212, 178, 0.1), rgba(11, 25, 44, 0.9)); border-color: var(--border-card);">
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <i class="fa-solid fa-award" style="font-size: 1.8rem; color: var(--primary);"></i>
+                            <div>
+                                <h4 style="color: var(--primary); font-size: 1.05rem; margin-bottom: 2px;">Mutual Value Generation</h4>
+                                <p style="font-size: 0.88rem; color: #E2E8F0;">By unlocking full physician capacity, a representative 25-doctor hospital captures over <strong>₹27,00,000+ in annual operational value</strong> while elevating patient satisfaction.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-star"></i>
+                    <span><strong>Key Takeaway:</strong> Modernizing appointment workflows creates mutual value: delivering an effortless experience for patients while maximizing clinical productivity.</span>
+                </div>
+            </div>
+
+            <!-- Slide 4: Strategic Research Objectives & Scope -->
+            <div class="slide-card" data-slide="4">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-bullseye"></i> Research Framework & Objectives</div>
+                        <h2 class="slide-title">Strategic Objectives: Lean Operations Alignment</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 04 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-3">
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-stopwatch-20"></i></div>
+                            <div class="card-title">1. Service Acceleration</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Streamline patient hospital visits to <strong>under 15 minutes</strong> through deterministic time-slot scheduling.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                            <div class="card-title">2. Capacity Maximization</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Achieve <strong>88%+ specialist capacity utilization</strong> through structured digital booking distribution.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                            <div class="card-title">3. Omnichannel Patient CX</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Deliver an intuitive 24/7 web self-service portal accessible across mobile and desktop without requiring app downloads.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <div class="card-title">4. Administrative Streamlining</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Automate front-desk scheduling workflows, increasing administrative team efficiency by <strong>30–40%</strong>.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                            <div class="card-title">5. Real-Time Telemetry</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Equip hospital leadership with a Command Center tracking patient throughput, doctor rosters, and department capacity.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div class="card-title">6. Data & Privacy Safeguards</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Ensure strict Role-Based Access Control, TLS 1.3 encryption, and alignment with national ABDM digital guidelines.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-compass"></i>
+                    <span><strong>Key Takeaway:</strong> A comprehensive strategic plan designed to optimize clinical capacity, streamline service delivery, and elevate organizational productivity.</span>
+                </div>
+            </div>
+
+            <!-- Slide 5: Business Process Optimization -->
+            <div class="slide-card" data-slide="5">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-diagram-project"></i> Service Blueprinting & Operations Flow</div>
+                        <h2 class="slide-title">Business Process Optimization: The Streamlined Patient Journey</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 05 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-3" style="height: auto;">
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                            <div class="card-title">Stage 1: Digital Discovery</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Patient explores specialist directory, verified qualifications, and department ratings online in seconds.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                            <div class="card-title">Stage 2: Slot Selection</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Patient reserves an exact verified time slot and receives instant digital booking confirmation.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-stethoscope"></i></div>
+                            <div class="card-title">Stage 3: Direct Consultation</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Patient arrives shortly before their allocated slot and proceeds directly to consultation with zero waiting.</p>
+                        </div>
+                    </div>
+
+                    <div class="pro-table-wrapper" style="margin-top: 10px;">
+                        <table class="pro-table">
+                            <thead>
+                                <tr>
+                                    <th>Process Metric</th>
+                                    <th>Traditional Baseline</th>
+                                    <th>CarePlus Digital Workflow</th>
+                                    <th>Efficiency Gain</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Total In-Hospital Dwell Time</strong></td>
+                                    <td>90+ Minutes</td>
+                                    <td><strong>12 – 15 Minutes</strong></td>
+                                    <td><span class="badge-gain">85% Faster</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Registration & Booking Time</strong></td>
+                                    <td>25 – 35 Minutes</td>
+                                    <td><strong>< 2 Minutes Online</strong></td>
+                                    <td><span class="badge-gain">92% Accelerated</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Front-Desk Footfall Balance</strong></td>
+                                    <td>Peak morning surges</td>
+                                    <td><strong>Smooth, staggered distribution</strong></td>
+                                    <td><span class="badge-gain">Optimized Flow</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span><strong>Key Takeaway:</strong> Shifting appointment discovery and validation upstream into a self-service platform eliminates waiting delays and balances service loads.</span>
+                </div>
+            </div>
+
+            <!-- Slide 6: Product Capabilities & Integrated Ecosystem -->
+            <div class="slide-card" data-slide="6">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-cubes"></i> Product Design & Multi-Tier Ecosystem</div>
+                        <h2 class="slide-title">CarePlus Functional Architecture: 3 Core Modules</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 06 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-3">
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-hospital-user"></i></div>
+                            <div class="card-title">1. Patient CX Self-Service Portal</div>
+                            <ul class="card-list">
+                                <li><strong>Specialty Discovery:</strong> Instant filtering across Cardiology, Neurology, Pediatrics, etc.</li>
+                                <li><strong>Doctor Transparency:</strong> Verified credentials, clinical background, and patient ratings.</li>
+                                <li><strong>Interactive Slot Picker:</strong> Real-time booking selection with instant visual feedback.</li>
+                                <li><strong>Personal Dashboard:</strong> Complete history and appointment tracking for patients.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                            <div class="card-title">2. Specialist Clinical Hub</div>
+                            <ul class="card-list">
+                                <li><strong>Professional Portfolio:</strong> Structured showcase of medical expertise and pedigree.</li>
+                                <li><strong>Dynamic Availability:</strong> Organized consultation pacing ensuring smooth patient flow.</li>
+                                <li><strong>Department Categorization:</strong> Streamlines patient routing across specialties.</li>
+                                <li><strong>Capacity Optimization:</strong> Maximizes active consultation hours.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-sliders"></i></div>
+                            <div class="card-title">3. Admin Command Center</div>
+                            <ul class="card-list">
+                                <li><strong>Live KPI Counters:</strong> Real-time metrics on Active Doctors and Confirmed Appointments.</li>
+                                <li><strong>One-Click Management:</strong> Fast appointment status coordination across departments.</li>
+                                <li><strong>Roster Governance:</strong> Dynamic doctor onboarding, profile editing, and scheduling.</li>
+                                <li><strong>Audit Trail:</strong> Complete administrative transparency and oversight.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-network-wired"></i>
+                    <span><strong>Key Takeaway:</strong> A unified digital ecosystem seamlessly connecting patient demand, medical expertise, and hospital administrative control.</span>
+                </div>
+            </div>
+
+            <!-- Slide 7: Technical Excellence & TCO -->
+            <div class="slide-card" data-slide="7">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-server"></i> Technology Strategy & Scalability</div>
+                        <h2 class="slide-title">Technology Excellence: High Performance & Low TCO</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 07 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-2">
+                        <div class="feature-card">
+                            <div class="card-title" style="color: var(--primary);"><i class="fa-solid fa-layer-group"></i> Decoupled 3-Tier Architecture</div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;">
+                                <div class="meta-box" style="padding: 10px;">
+                                    <div class="lbl">Presentation Tier</div>
+                                    <div class="val" style="font-size: 0.85rem;">Responsive web interface with sub-800ms load times and modern glassmorphic aesthetics.</div>
+                                </div>
+                                <div class="meta-box" style="padding: 10px;">
+                                    <div class="lbl">Application & Logic Tier</div>
+                                    <div class="val" style="font-size: 0.85rem;">Decoupled RESTful API engine ensuring non-blocking asynchronous request handling.</div>
+                                </div>
+                                <div class="meta-box" style="padding: 10px;">
+                                    <div class="lbl">Data & Persistence Tier</div>
+                                    <div class="val" style="font-size: 0.85rem;">Structured, ACID-compliant data models ensuring complete transactional integrity.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="card-title" style="color: var(--accent);"><i class="fa-solid fa-coins"></i> Total Cost of Ownership (TCO) Advantages</div>
+                            <ul class="card-list" style="margin-top: 6px;">
+                                <li><strong>Zero Proprietary Licensing Fees:</strong> Built on open web standards, eliminating expensive per-seat software licenses.</li>
+                                <li><strong>Zero-Install Universal Access:</strong> Accessible instantly on any smartphone, tablet, or workstation browser without app installation barriers.</li>
+                                <li><strong>Low Cloud Infrastructure Overhead:</strong> Lightweight memory footprint enabling cost-effective cloud scalability.</li>
+                                <li><strong>Continuous Operational Availability:</strong> Localized data caching ensures uninterrupted operations during network fluctuations.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-check"></i>
+                    <span><strong>Key Takeaway:</strong> Engineered for rapid response times, low operational overhead, and universal accessibility across modern and legacy devices.</span>
+                </div>
+            </div>
+
+            <!-- Slide 8: Commercial Business Model & Growth -->
+            <div class="slide-card" data-slide="8">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-sack-dollar"></i> Commercial Model & Market Potential</div>
+                        <h2 class="slide-title">Commercial Business Model & Market Sizing</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 08 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-3">
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                            <div class="card-title">1. B2B SaaS Subscriptions</div>
+                            <ul class="card-list">
+                                <li><strong>Starter Tier (Clinics):</strong> ₹2,999 / mo for up to 5 specialists.</li>
+                                <li><strong>Professional Tier (Hospitals):</strong> ₹8,999 / mo for up to 20 specialists.</li>
+                                <li><strong>Enterprise Network:</strong> ₹24,999 / mo for multi-facility hospital chains.</li>
+                                <li>Predictable, recurring annual SaaS subscription revenue.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-receipt"></i></div>
+                            <div class="card-title">2. Digital Convenience Services</div>
+                            <ul class="card-list">
+                                <li>Nominal processing fees for digital self-service features and instant priority slot reservations.</li>
+                                <li>Scales directly with total patient consultation volume.</li>
+                                <li>Flexible cost-sharing model between patient and healthcare facility.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                            <div class="card-title">3. Enterprise Add-ons</div>
+                            <ul class="card-list">
+                                <li>Predictive footfall forecasting and capacity optimization modules.</li>
+                                <li>Custom automated WhatsApp/SMS notification gateways.</li>
+                                <li>HL7 / FHIR healthcare system integration consulting.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="metric-callout-row" style="margin-top: 10px; margin-bottom: 0;">
+                        <div class="metric-card">
+                            <div class="metric-number" style="font-size: 1.5rem;">₹45,000 Cr</div>
+                            <div class="metric-label">TAM (India Healthcare IT)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number" style="font-size: 1.5rem;">₹4,200 Cr</div>
+                            <div class="metric-label">SAM (OPD Scheduling)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number" style="font-size: 1.5rem;">₹45 Cr</div>
+                            <div class="metric-label">SOM (350+ Facilities / Y1–3)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number" style="font-size: 1.5rem;">88%</div>
+                            <div class="metric-label">Gross Margin Profile</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-money-bill-trend-up"></i>
+                    <span><strong>Key Takeaway:</strong> A scalable multi-stream commercial model pairing predictable SaaS subscription revenue with high-volume digital service growth.</span>
+                </div>
+            </div>
+
+            <!-- Slide 9: Financial Feasibility, Unit Economics & ROI -->
+            <div class="slide-card" data-slide="9">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-calculator"></i> Capital Budgeting & Unit Economics</div>
+                        <h2 class="slide-title">Financial Feasibility: Cost-Benefit & Payback Model</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 09 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="pro-table-wrapper">
+                        <table class="pro-table">
+                            <thead>
+                                <tr>
+                                    <th>Value Area (25-Doctor Hospital)</th>
+                                    <th>Traditional Baseline</th>
+                                    <th>CarePlus Digital Deployment</th>
+                                    <th>Annual Financial Benefit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Front-Desk Administrative Productivity</strong></td>
+                                    <td>5 Reception Shifts (₹15.0L/yr)</td>
+                                    <td>Optimized Shift Allocation (₹9.0L/yr)</td>
+                                    <td><span class="badge-gain">+ ₹6,00,000 Saved / yr</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Clinical Capacity Maximization</strong></td>
+                                    <td>Baseline Attendance</td>
+                                    <td>Enhanced Attendance & Slot Utilization</td>
+                                    <td><span class="badge-gain">+ ₹21,00,000 Value Generated</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Paper Ledgers & Administrative Expense</strong></td>
+                                    <td>₹1,80,000 / yr</td>
+                                    <td>₹30,000 / yr</td>
+                                    <td><span class="badge-gain">+ ₹1,50,000 Admin Saved</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CarePlus SaaS & Cloud Investment</strong></td>
+                                    <td>₹0</td>
+                                    <td>₹1,08,000 / yr</td>
+                                    <td style="color: var(--accent);">- ₹1,08,000 System Cost</td>
+                                </tr>
+                                <tr style="background: rgba(0, 212, 178, 0.1); font-weight: bold;">
+                                    <td><strong>NET ANNUAL VALUE CREATED</strong></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td><span class="badge-gain" style="font-size: 0.95rem;">+ ₹27,42,000 / Year</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="metric-callout-row" style="margin-top: 10px; margin-bottom: 0;">
+                        <div class="metric-card">
+                            <div class="metric-number">2.8 Mo</div>
+                            <div class="metric-label">Payback Period</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">640%+</div>
+                            <div class="metric-label">3-Year ROI</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">₹58.4L</div>
+                            <div class="metric-label">3-Yr NPV (@ 12% Disc.)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">₹1.2L</div>
+                            <div class="metric-label">Initial Deployment CapEx</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-coins"></i>
+                    <span><strong>Key Takeaway:</strong> Achieves full capital recovery in under 3 months through capacity maximization and administrative productivity.</span>
+                </div>
+            </div>
+
+            <!-- Slide 10: Strategic Advantages & Market Differentiation -->
+            <div class="slide-card" data-slide="10">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-chess-knight"></i> Strategic Management & Positioning</div>
+                        <h2 class="slide-title">Strategic Advantages & Market Differentiation</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 10 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-4">
+                        <div class="feature-card" style="border-left: 4px solid var(--primary);">
+                            <div class="card-title" style="color: var(--primary);"><i class="fa-solid fa-feather"></i> Frictionless Access</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Zero-install web architecture operating seamlessly on any browser, ensuring maximum patient adoption and zero barrier to entry.</p>
+                        </div>
+
+                        <div class="feature-card" style="border-left: 4px solid var(--accent);">
+                            <div class="card-title" style="color: var(--accent);"><i class="fa-solid fa-handshake-angle"></i> Private-Label Control</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Empowers healthcare facilities to retain 100% of their patient relationships and data sovereignty without third-party commission splits.</p>
+                        </div>
+
+                        <div class="feature-card" style="border-left: 4px solid var(--success);">
+                            <div class="card-title" style="color: #34D399;"><i class="fa-solid fa-piggy-bank"></i> High Capital Efficiency</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Ultra-low deployment and hosting overhead enabling rapid 2.8-month payback and substantial 3-year ROI exceeding 600%.</p>
+                        </div>
+
+                        <div class="feature-card" style="border-left: 4px solid var(--text-highlight);">
+                            <div class="card-title" style="color: var(--text-highlight);"><i class="fa-solid fa-shield-check"></i> Standardized Interoperability</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Built to align seamlessly with the Ayushman Bharat Digital Mission (ABDM) and international FHIR healthcare data standards.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-shield"></i>
+                    <span><strong>Key Takeaway:</strong> Strategic strength is anchored in private-label hospital empowerment, rapid deployment, and direct patient-provider relationships.</span>
+                </div>
+            </div>
+
+            <!-- Slide 11: Phased Implementation Roadmap -->
+            <div class="slide-card" data-slide="11">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-timeline"></i> Kotter's Change Leadership Framework</div>
+                        <h2 class="slide-title">Change Management & 16-Week Implementation Roadmap</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 11 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-3">
+                        <div class="feature-card" style="border-top: 4px solid var(--primary);">
+                            <div class="card-title">Phase 1: Pilot & Benchmark (W1–4)</div>
+                            <ul class="card-list">
+                                <li>Launch in single high-volume department (Cardiology / Pediatrics).</li>
+                                <li>Conduct receptionist workflow workshops and establish quick wins.</li>
+                                <li>Benchmark patient satisfaction and wait-time improvements.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" style="border-top: 4px solid var(--accent);">
+                            <div class="card-title">Phase 2: Hospital Rollout (W5–8)</div>
+                            <ul class="card-list">
+                                <li>Scale across all clinical specialties (Neurology, Dermatology, etc.).</li>
+                                <li>Deploy Master Admin Command Center for administrative leadership.</li>
+                                <li>Introduce digital QR booking signage at reception for walk-in convenience.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" style="border-top: 4px solid var(--success);">
+                            <div class="card-title">Phase 3: Value Realization (W9–16)</div>
+                            <ul class="card-list">
+                                <li>Activate automated notification reminders to maximize attendance.</li>
+                                <li>Deliver executive Board analytics on clinical capacity density.</li>
+                                <li>Initiate ABDM ABHA ID linking and digital service integrations.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="feature-card" style="margin-top: 10px;">
+                        <div class="card-title" style="font-size: 1rem;"><i class="fa-solid fa-people-roof"></i> Organizational Enablement & Staff Upskilling</div>
+                        <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">
+                            Front-desk personnel are upskilled into <strong>"Digital Patient Navigators"</strong> who guide elderly and walk-in patients through digital self-check-in, creating positive workplace engagement and elevated staff morale.
+                        </p>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span><strong>Key Takeaway:</strong> A structured, low-risk rollout strategy ensuring continuous healthcare operations, clinical buy-in, and rapid user adoption.</span>
+                </div>
+            </div>
+
+            <!-- Slide 12: Data Security & Regulatory Compliance -->
+            <div class="slide-card" data-slide="12">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-shield-halved"></i> Governance & Compliance Standards</div>
+                        <h2 class="slide-title">Enterprise Data Security, Privacy & Regulatory Compliance</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 12 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="pro-table-wrapper">
+                        <table class="pro-table">
+                            <thead>
+                                <tr>
+                                    <th>Governance Area</th>
+                                    <th>Security Standard</th>
+                                    <th>CarePlus Implementation</th>
+                                    <th>Strategic Benefit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Patient Privacy & Encryption</strong></td>
+                                    <td>TLS 1.3 & HTTPS</td>
+                                    <td>End-to-end data encryption for all interactions</td>
+                                    <td><span class="badge-gain">Complete Patient Trust</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Access Control & Governance</strong></td>
+                                    <td>Role-Based Access (RBAC)</td>
+                                    <td>Strict segregation between patient, doctor, and admin portals</td>
+                                    <td><span class="badge-gain">Zero Data Exposure</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>National Standards Alignment</strong></td>
+                                    <td>ABDM & FHIR Compatible</td>
+                                    <td>Standardized data schemas aligned with digital healthcare guidelines</td>
+                                    <td><span class="badge-gain">Future-Ready Compliance</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Operational Continuity</strong></td>
+                                    <td>High-Availability Caching</td>
+                                    <td>Localized roster caching ensuring continuity during network fluctuations</td>
+                                    <td><span class="badge-gain">Uninterrupted Operations</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-lock"></i>
+                    <span><strong>Key Takeaway:</strong> Comprehensive data security and compliance safeguards guarantee patient trust, institutional privacy, and continuous operations.</span>
+                </div>
+            </div>
+
+            <!-- Slide 13: Balanced Scorecard & KPIs -->
+            <div class="slide-card" data-slide="13">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-gauge"></i> Strategic Performance Control</div>
+                        <h2 class="slide-title">Balanced Scorecard & Key Performance Indicators (KPIs)</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 13 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-4">
+                        <div class="feature-card" style="border-left: 4px solid var(--primary);">
+                            <div class="card-title" style="color: var(--primary);"><i class="fa-solid fa-chart-line"></i> 1. Financial Perspective</div>
+                            <ul class="card-list">
+                                <li>25% – 30% reduction in appointment handling administrative cost.</li>
+                                <li>Recapture ₹21L+ in annual clinical capacity value.</li>
+                                <li>Complete capital investment payback achieved in < 3 months.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" style="border-left: 4px solid var(--accent);">
+                            <div class="card-title" style="color: var(--accent);"><i class="fa-solid fa-heart-pulse"></i> 2. Patient / CX Perspective</div>
+                            <ul class="card-list">
+                                <li>Patient Net Promoter Score (NPS) target of > +65.</li>
+                                <li>Average outpatient visit dwell time < 15 minutes.</li>
+                                <li>Digital self-service booking adoption > 60% within 90 days.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" style="border-left: 4px solid var(--text-highlight);">
+                            <div class="card-title" style="color: var(--text-highlight);"><i class="fa-solid fa-gears"></i> 3. Internal Process Perspective</div>
+                            <ul class="card-list">
+                                <li>Doctor capacity utilization increased to 88%+.</li>
+                                <li>High attendance reliability with automated confirmation workflows.</li>
+                                <li>Front-desk peak morning queue congestion reduced by 75%.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" style="border-left: 4px solid var(--success);">
+                            <div class="card-title" style="color: #34D399;"><i class="fa-solid fa-graduation-cap"></i> 4. Learning & Growth</div>
+                            <ul class="card-list">
+                                <li>100% of front-desk personnel certified as Digital Navigators.</li>
+                                <li>Continuous doctor roster optimization based on demand telemetry.</li>
+                                <li>Data-driven clinical resource allocation across specialties.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span><strong>Key Takeaway:</strong> The Balanced Scorecard translates high-level strategy into quantifiable clinical, financial, and operational excellence.</span>
+                </div>
+            </div>
+
+            <!-- Slide 14: Future Growth Vectors -->
+            <div class="slide-card" data-slide="14">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-rocket"></i> Horizon 2 & 3 Growth Roadmap</div>
+                        <h2 class="slide-title">Future Growth Vectors: HealthTech Innovations</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 14 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-4">
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                            <div class="card-title">1. Smart Clinical Guidance</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Conversational guidance helping patients connect with the most appropriate medical specialty quickly and accurately.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-video"></i></div>
+                            <div class="card-title">2. Telehealth Consultations</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Secure browser-based video consultations expanding healthcare access to remote and suburban areas.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-ticket"></i></div>
+                            <div class="card-title">3. Dynamic Mobile Queue Updates</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Live smartphone queue countdowns allowing patients to wait comfortably in nearby hospital cafes or gardens.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="card-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+                            <div class="card-title">4. Deep ABDM Health ID Sync</div>
+                            <p style="font-size: 0.86rem; color: #CBD5E1; line-height: 1.5;">Automated linking of 14-digit ABHA IDs for instant transmission of electronic health records into the national health grid.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span><strong>Key Takeaway:</strong> CarePlus is designed as a foundational digital spine, ready to scale into advanced smart hospital capabilities.</span>
+                </div>
+            </div>
+
+            <!-- Slide 15: Executive Conclusion & Strategic Defense -->
+            <div class="slide-card" data-slide="15">
+                <div class="slide-header">
+                    <div>
+                        <div class="slide-meta-tag"><i class="fa-solid fa-flag-checkered"></i> Summary & Defense Closing</div>
+                        <h2 class="slide-title">Executive Conclusion & Strategic Takeaways</h2>
+                    </div>
+                    <div class="slide-counter-badge">Slide 15 / 15</div>
+                </div>
+                <div class="slide-body">
+                    <div class="cards-grid-2">
+                        <div class="feature-card">
+                            <div class="card-title" style="color: var(--primary);"><i class="fa-solid fa-check-double"></i> Core Project Accomplishments</div>
+                            <ul class="card-list" style="margin-top: 6px; gap: 12px;">
+                                <li><strong>Operational Excellence:</strong> Streamlined outpatient appointments, compressing patient waiting dwell times by <strong>85%</strong>.</li>
+                                <li><strong>Quantifiable Financial ROI:</strong> Unlocks clinical specialist capacity, generating <strong>₹27.4L in net annual value</strong> with a <strong>2.8-month payback</strong>.</li>
+                                <li><strong>Low-TCO Tech Architecture:</strong> Zero-install, high-speed progressive web architecture with zero proprietary software licensing fees.</li>
+                                <li><strong>Strategic Management Rigor:</strong> Integrated Lean operations, Service Blueprinting, Unit Economics, and Kotter's Change Leadership.</li>
+                            </ul>
+                        </div>
+
+                        <div class="feature-card" style="text-align: center; justify-content: center; align-items: center; background: linear-gradient(145deg, rgba(0, 212, 178, 0.1), rgba(11, 25, 44, 0.95)); border: 2px solid var(--primary);">
+                            <i class="fa-solid fa-award" style="font-size: 3rem; color: var(--primary); margin-bottom: 16px;"></i>
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 8px;">Thank You!</h3>
+                            <p style="font-size: 1rem; color: var(--text-muted); margin-bottom: 16px;">CarePlus: Strategic Healthcare Transformation System</p>
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 12px 24px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                <div style="font-weight: 700; color: #fff;">Presented By: Lakshya Kumar</div>
+                                <div style="font-size: 0.85rem; color: var(--primary);">MBA Candidate (2025–2026)</div>
+                            </div>
+                            <p style="font-size: 0.9rem; color: #CBD5E1; margin-top: 16px; font-style: italic;">
+                                "I now warmly welcome questions, comments, and guidance from the respected panel."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="takeaway-banner">
+                    <i class="fa-solid fa-comments"></i>
+                    <span><strong>Viva Ready:</strong> Live prototype running and ready for demonstration. Standing by for panel questions.</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Speaker Notes Drawer -->
+        <aside class="speaker-notes-drawer" id="speaker-drawer">
+            <div class="notes-header">
+                <div class="notes-title">
+                    <i class="fa-solid fa-microphone-lines"></i> Presenter Teleprompter
+                </div>
+                <div class="defense-timer" id="timer-display">00:00</div>
+            </div>
+
+            <div class="timer-ctrls">
+                <button class="btn-ctrl" id="btn-timer-start" style="flex: 1;"><i class="fa-solid fa-play"></i> Start</button>
+                <button class="btn-ctrl" id="btn-timer-pause"><i class="fa-solid fa-pause"></i> Pause</button>
+                <button class="btn-ctrl" id="btn-timer-reset"><i class="fa-solid fa-rotate-left"></i></button>
+            </div>
+
+            <div class="notes-content-box">
+                <div class="notes-section-lbl"><i class="fa-solid fa-comment-dots"></i> Spoken Defense Script</div>
+                <div class="notes-speech-text" id="notes-script">
+                    Loading speaker script...
+                </div>
+            </div>
+
+            <div class="notes-viva-box">
+                <div class="notes-section-lbl" style="color: var(--primary);"><i class="fa-solid fa-graduation-cap"></i> Anticipated Panel Viva Question</div>
+                <div class="viva-q" id="notes-viva-q">Loading anticipated question...</div>
+                <div class="viva-a" id="notes-viva-a">Loading recommended managerial response...</div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- Bottom Controls & Progress Bar -->
+    <footer class="bottom-bar">
+        <div class="nav-buttons">
+            <button class="btn-nav" id="btn-prev" disabled>
+                <i class="fa-solid fa-chevron-left"></i> Previous
+            </button>
+            <button class="btn-nav" id="btn-next">
+                Next <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-muted);">
+            <span>Progress:</span>
+            <div class="progress-container">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+            <span id="slide-indicator" style="font-weight: 700; color: #fff;">1 / 15</span>
+        </div>
+
+        <div style="font-size: 0.78rem; color: var(--text-muted);">
+            <i class="fa-solid fa-keyboard"></i> Use <strong>&larr; / &rarr;</strong> or <strong>Space</strong> to navigate | <strong>N</strong> for Notes | <strong>F</strong> for Fullscreen
+        </div>
+    </footer>
+
+    <!-- Slide Overview Grid Modal -->
+    <div class="slide-overview-modal" id="overview-modal">
+        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto;">
+            <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; color: #fff;"><i class="fa-solid fa-table-cells-large" style="color: var(--primary);"></i> Slide Deck Overview</h2>
+            <button class="btn-ctrl" id="btn-close-overview" style="font-size: 1rem; padding: 8px 16px;"><i class="fa-solid fa-xmark"></i> Close (Esc)</button>
+        </div>
+        <div class="overview-grid" id="overview-grid-container">
+            <!-- Injected via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Interactive Slide Navigation & Script Engine -->
+    <script>
+        const slideData = {
+            1: {
+                title: "Title & Executive Introduction",
+                script: "Good morning, respected members of the evaluation committee and faculty panel. My name is Lakshya Kumar, and I am pleased to present my MBA capstone project titled 'CarePlus: Strategic Digital Healthcare Transformation and Hospital Management System'. Modern healthcare management requires balancing clinical excellence with seamless operational delivery. This project demonstrates how applying Lean service principles and accessible web technology optimizes hospital capacity, streamlines patient scheduling, and generates measurable financial returns.",
+                vivaQ: "What makes CarePlus a management project rather than purely a technical application?",
+                vivaA: "The project centers on foundational management disciplines: Service Operations Optimization, Queuing Theory, Capacity Utilization, Unit Economics, and Kotter's Change Leadership framework."
+            },
+            2: {
+                title: "Executive Summary & Market Opportunity",
+                script: "To understand the strategic significance of CarePlus, we look at the macro healthcare environment. HealthTech is growing globally at over 18 percent annually. Today's patient expects instant transparency and real-time scheduling. For hospital leadership, outpatient digitization is a powerful operational lever: it enhances the patient experience, maximizes clinical capacity, and establishes a modern, competitive institutional presence.",
+                vivaQ: "Why is OPD scheduling the primary focus instead of inpatient bed management?",
+                vivaA: "Outpatient departments represent the primary brand gateway and customer acquisition funnel for hospitals. 80% of inpatient admissions originate from initial OPD consultations; optimizing OPD flow directly expands the hospital's downstream care pipeline."
+            },
+            3: {
+                title: "The Operational Opportunity",
+                script: "Slide 3 highlights the strategic opportunity. In healthcare operations, clinical specialist time is a premier institutional asset. By implementing structured digital scheduling, hospitals can ensure physician capacity is fully utilized while providing patients with complete scheduling convenience. This dual-value model transforms outpatient operations: patients enjoy predictable visits, and the hospital maximizes daily throughput.",
+                vivaQ: "How does CarePlus ensure high appointment attendance?",
+                vivaA: "By providing structured digital confirmations and automated notification loops, ensuring confirmed slots are attended reliably and clinical hours are fully utilized."
+            },
+            4: {
+                title: "Strategic Objectives: Lean Operations",
+                script: "Our project established five core strategic objectives rooted in Lean Operations. First, accelerating patient service delivery to under 15 minutes. Second, driving specialist capacity utilization to over 88 percent. Third, providing an accessible 24/7 digital channel. Fourth, boosting administrative efficiency by over 30 percent. And fifth, empowering hospital leadership with real-time operational telemetry.",
+                vivaQ: "How do you define and measure Capacity Utilization in this context?",
+                vivaA: "Capacity Utilization = (Actual Billed Consultation Hours / Total Scheduled Doctor Clinical Hours) * 100. CarePlus increases this metric by packing schedule density and eliminating empty idle gaps."
+            },
+            5: {
+                title: "Business Process Optimization",
+                script: "Slide 5 illustrates the transformation of the outpatient service journey. In the optimized CarePlus workflow, appointment discovery and slot reservation take place digitally before the visit. When the patient arrives, they proceed directly to their consultation with minimal wait. This reduces overall in-hospital dwell time by 85 percent and smooths patient arrival flows across the entire operating day.",
+                vivaQ: "How does this workflow transformation relate to Queuing Theory?",
+                vivaA: "Traditional walk-ins follow a variable arrival pattern causing queue spikes. CarePlus converts this into a scheduled, deterministic distribution model, smoothing arrivals so demand matches service capacity perfectly."
+            },
+            6: {
+                title: "Product Capabilities & Ecosystem",
+                script: "CarePlus is structured as a three-part integrated ecosystem. For patients, it provides a transparent discovery and self-service booking portal. For physicians, it offers an elevated professional showcase and structured daily timetable. For hospital management, it delivers an executive command center equipped with live KPI counters, one-click appointment status management, and full staff roster controls.",
+                vivaQ: "How does the Admin Command Center improve operational decision making?",
+                vivaA: "It provides live telemetry on doctor availability, active patient queues, and pending booking requests, allowing administrators to dynamically allocate resources to high-demand specialties."
+            },
+            7: {
+                title: "Technology Excellence & Low TCO",
+                script: "From a technology strategy perspective, CarePlus was designed for minimal Total Cost of Ownership. By leveraging open web standards and decoupled RESTful architecture, the system operates without expensive proprietary licenses. Because it is a zero-install web solution, patients and staff can access the portal instantly on any browser, while maintaining high performance and low infrastructure costs.",
+                vivaQ: "Why choose a web application over a native mobile app?",
+                vivaA: "Web applications eliminate friction: patients can immediately book appointments on any smartphone without downloading a large app. In addition, maintaining a single unified web solution reduces maintenance and hosting expenses by over 60%."
+            },
+            8: {
+                title: "Commercial Business Model & Market",
+                script: "Slide 8 outlines the commercial model of CarePlus. The business operates on a predictable B2B SaaS subscription model, offering tiered licensing from small specialty clinics to multi-facility hospital networks. This is paired with value-added digital service options and enterprise analytics across an addressable Indian market of ₹4,200 Crores in outpatient scheduling.",
+                vivaQ: "What is your competitive advantage over third-party aggregator directories?",
+                vivaA: "CarePlus is a private-label institutional solution. It empowers hospitals to retain 100% of their patient relationships, data ownership, and brand equity without paying third-party lead commissions."
+            },
+            9: {
+                title: "Financial Feasibility & ROI Analysis",
+                script: "Slide 9 presents our financial feasibility and unit economics model for a 25-doctor healthcare facility. By maximizing specialist capacity utilization, the hospital captures ₹21 Lakhs in additional annual consultation value. Combined with ₹6 Lakhs in administrative labor optimization, the facility generates over ₹27 Lakhs in net annual value, yielding a payback period of just 2.8 months and a 3-year ROI exceeding 600 percent.",
+                vivaQ: "What discount rate was applied in your Net Present Value (NPV) calculation?",
+                vivaA: "A conservative 12% cost of capital was used over a 3-year horizon, producing an NPV of ₹58.4 Lakhs, confirming strong capital budgeting returns."
+            },
+            10: {
+                title: "Strategic Advantages & Market Differentiation",
+                script: "Slide 10 details our strategic positioning. Unlike external directory aggregators that charge per-lead commissions, CarePlus operates as a private-label solution that empowers hospitals to own their patient relationships and data. Our ultra-low Total Cost of Ownership and frictionless accessibility create high adoption among medical staff and establish durable competitive advantages.",
+                vivaQ: "How does CarePlus support institutional brand equity?",
+                vivaA: "By providing a dedicated, branded portal for the hospital, ensuring patients view the hospital as their primary direct healthcare provider rather than an intermediary."
+            },
+            11: {
+                title: "Change Management Roadmap",
+                script: "Successful adoption requires structured change leadership. We implement a 16-week phased rollout based on Kotter's Change Model. Beginning with a 4-week pilot in a high-volume department to establish quick wins, we upskill front-desk staff into Digital Navigators before expanding hospital-wide by Week 8 and activating advanced analytics by Week 16.",
+                vivaQ: "How do you handle older patients who prefer personal assistance?",
+                vivaA: "Our Digital Navigators at the physical reception assist walk-ins and elderly patients directly, ensuring a warm, supportive, and accessible experience for all demographics."
+            },
+            12: {
+                title: "Data Security & Regulatory Compliance",
+                script: "Slide 12 highlights our data security and governance protocols. CarePlus implements TLS 1.3 encryption and Role-Based Access Control, ensuring complete alignment with digital healthcare data standards. To guarantee operational continuity, the system features localized data caching, ensuring front-desk coordination proceeds smoothly even during temporary network interruptions.",
+                vivaQ: "How does CarePlus align with national digital health standards like ABDM?",
+                vivaA: "It utilizes standardized data schemas compatible with the Ayushman Bharat Digital Mission (ABDM) and FHIR guidelines, ensuring future-ready interoperability."
+            },
+            13: {
+                title: "Balanced Scorecard & KPIs",
+                script: "To ensure long-term managerial governance, we apply a Balanced Scorecard across four perspectives. Financially, we achieve rapid capital payback and cost optimization. From the patient perspective, we deliver sub-15-minute wait times and high satisfaction. Internally, we elevate doctor capacity utilization to 88 percent, supported by continuous staff enablement.",
+                vivaQ: "Which single metric is the most sensitive indicator of project health?",
+                vivaA: "Specialist Capacity Utilization Rate. It directly bridges clinical productivity, institutional value creation, and scheduling efficiency."
+            },
+            14: {
+                title: "Future Growth Vectors & HealthTech",
+                script: "Slide 14 charts our future innovation horizons. Moving forward, CarePlus is positioned to expand into smart specialty guidance, integrated video consultations for remote care, dynamic smartphone queue updates, and deep integration with national digital health registries.",
+                vivaQ: "How do dynamic mobile queue updates enhance patient convenience?",
+                vivaA: "Patients can see their live position in queue on their smartphone, allowing them to wait comfortably anywhere in the hospital facility rather than in a congested waiting area."
+            },
+            15: {
+                title: "Executive Conclusion & Closing",
+                script: "In conclusion, CarePlus demonstrates how strategic service design and accessible digital technology create substantial value in modern healthcare delivery. It delivers quantified operational savings, maximizes clinical productivity, and elevates the patient experience. I thank the respected evaluators for your time and guidance, and I warmly welcome your questions and feedback.",
+                vivaQ: "What was your biggest personal learning from this MBA project?",
+                vivaA: "That digital transformation is 20% technology and 80% change management and service operations design. Creating value requires aligning doctor incentives, patient convenience, and hospital financial health into a unified system."
+            }
+        };
+
+        let currentSlide = 1;
+        const totalSlides = 15;
+        const slides = document.querySelectorAll('.slide-card');
+        const progressFill = document.getElementById('progress-fill');
+        const slideIndicator = document.getElementById('slide-indicator');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const speakerDrawer = document.getElementById('speaker-drawer');
+        const btnNotes = document.getElementById('btn-notes');
+        const notesScript = document.getElementById('notes-script');
+        const notesVivaQ = document.getElementById('notes-viva-q');
+        const notesVivaA = document.getElementById('notes-viva-a');
+        const overviewModal = document.getElementById('overview-modal');
+        const btnOverview = document.getElementById('btn-overview');
+        const btnCloseOverview = document.getElementById('btn-close-overview');
+        const overviewGridContainer = document.getElementById('overview-grid-container');
+
+        function buildOverviewGrid() {
+            overviewGridContainer.innerHTML = '';
+            for (let i = 1; i <= totalSlides; i++) {
+                const thumb = document.createElement('div');
+                thumb.className = `overview-thumb ${i === currentSlide ? 'active' : ''}`;
+                thumb.innerHTML = `
+                    <div class="thumb-num">Slide ${String(i).padStart(2, '0')}</div>
+                    <div class="thumb-title">${slideData[i].title}</div>
+                `;
+                thumb.addEventListener('click', () => {
+                    goToSlide(i);
+                    overviewModal.classList.remove('open');
+                });
+                overviewGridContainer.appendChild(thumb);
+            }
+        }
+
+        function updateSlideUI() {
+            slides.forEach(slide => {
+                const num = parseInt(slide.getAttribute('data-slide'));
+                slide.classList.toggle('active', num === currentSlide);
+            });
+
+            const progressPct = (currentSlide / totalSlides) * 100;
+            progressFill.style.width = `${progressPct}%`;
+            slideIndicator.textContent = `${currentSlide} / ${totalSlides}`;
+
+            btnPrev.disabled = currentSlide === 1;
+            btnNext.disabled = currentSlide === totalSlides;
+            btnNext.innerHTML = currentSlide === totalSlides ? 'Finish <i class="fa-solid fa-flag-checkered"></i>' : 'Next <i class="fa-solid fa-chevron-right"></i>';
+
+            if (slideData[currentSlide]) {
+                notesScript.textContent = slideData[currentSlide].script;
+                notesVivaQ.textContent = slideData[currentSlide].vivaQ;
+                notesVivaA.textContent = slideData[currentSlide].vivaA;
+            }
+
+            const thumbs = overviewGridContainer.querySelectorAll('.overview-thumb');
+            thumbs.forEach((thumb, idx) => {
+                thumb.classList.toggle('active', idx + 1 === currentSlide);
+            });
+        }
+
+        function goToSlide(slideNum) {
+            if (slideNum >= 1 && slideNum <= totalSlides) {
+                currentSlide = slideNum;
+                updateSlideUI();
+            }
+        }
+
+        btnPrev.addEventListener('click', () => goToSlide(currentSlide - 1));
+        btnNext.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                goToSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                goToSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                goToSlide(1);
+            } else if (e.key === 'End') {
+                goToSlide(totalSlides);
+            } else if (e.key.toLowerCase() === 'n' || e.key.toLowerCase() === 'p') {
+                toggleNotes();
+            } else if (e.key.toLowerCase() === 'f') {
+                toggleFullscreen();
+            } else if (e.key === 'Escape') {
+                overviewModal.classList.remove('open');
+            }
+        });
+
+        function toggleNotes() {
+            speakerDrawer.classList.toggle('open');
+            btnNotes.classList.toggle('active');
+        }
+        btnNotes.addEventListener('click', toggleNotes);
+
+        btnOverview.addEventListener('click', () => {
+            buildOverviewGrid();
+            overviewModal.classList.add('open');
+        });
+        btnCloseOverview.addEventListener('click', () => overviewModal.classList.remove('open'));
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => alert(err.message));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
+
+        let timerSeconds = 0;
+        let timerInterval = null;
+        const timerDisplay = document.getElementById('timer-display');
+        const btnTimerStart = document.getElementById('btn-timer-start');
+        const btnTimerPause = document.getElementById('btn-timer-pause');
+        const btnTimerReset = document.getElementById('btn-timer-reset');
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        btnTimerStart.addEventListener('click', () => {
+            if (!timerInterval) {
+                timerInterval = setInterval(() => {
+                    timerSeconds++;
+                    timerDisplay.textContent = formatTime(timerSeconds);
+                }, 1000);
+            }
+        });
+
+        btnTimerPause.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        });
+
+        btnTimerReset.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerSeconds = 0;
+            timerDisplay.textContent = '00:00';
+        });
+
+        buildOverviewGrid();
+        updateSlideUI();
+    </script>
+</body>
+</html>
