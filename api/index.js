@@ -1,8 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
+const rootDir = process.cwd();
 
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
@@ -257,8 +260,35 @@ router.get('/health', (req, res) => {
     res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-// Mount router on both `/api` and `/` so direct invocations or rewritten paths work
+// Mount router on both `/api` and `/`
 app.use('/api', router);
 app.use('/', router);
+
+// Serve static assets from project root if any request reaches Express
+app.use(express.static(rootDir));
+app.use('/ppt', express.static(path.join(rootDir, 'ppt')));
+app.use('/css', express.static(path.join(rootDir, 'css')));
+app.use('/js', express.static(path.join(rootDir, 'js')));
+app.use('/images', express.static(path.join(rootDir, 'images')));
+
+// Fallback static page helper
+function serveFileIfExists(res, filePath) {
+    const fullPath = path.isAbsolute(filePath) ? filePath : path.join(rootDir, filePath);
+    if (fs.existsSync(fullPath)) {
+        res.sendFile(fullPath);
+    } else {
+        res.status(404).send('Page Not Found');
+    }
+}
+
+app.get(['/', '/index.html'], (req, res) => serveFileIfExists(res, 'index.html'));
+app.get('/doctors.html', (req, res) => serveFileIfExists(res, 'doctors.html'));
+app.get('/login.html', (req, res) => serveFileIfExists(res, 'login.html'));
+app.get('/register.html', (req, res) => serveFileIfExists(res, 'register.html'));
+app.get('/appointment.html', (req, res) => serveFileIfExists(res, 'appointment.html'));
+app.get('/dashboard.html', (req, res) => serveFileIfExists(res, 'dashboard.html'));
+app.get('/admin.html', (req, res) => serveFileIfExists(res, 'admin.html'));
+app.get(['/ppt', '/ppt/', '/ppt/index.html'], (req, res) => serveFileIfExists(res, path.join('ppt', 'index.html')));
+app.get('/ppt/presentation.html', (req, res) => serveFileIfExists(res, path.join('ppt', 'presentation.html')));
 
 module.exports = app;
