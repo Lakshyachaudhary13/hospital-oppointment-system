@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
+const rootDir = path.join(__dirname, '..');
 
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
@@ -151,7 +153,7 @@ const initialData = {
 // In-memory DB state for serverless execution
 let db = JSON.parse(JSON.stringify(initialData));
 
-// Create a router to support both /api/... and direct routing
+// Create a router for API endpoints
 const router = express.Router();
 
 // --- Doctors ---
@@ -257,8 +259,28 @@ router.get('/health', (req, res) => {
     res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-// Mount router under both `/api` and `/`
+// Mount router under `/api`
 app.use('/api', router);
-app.use('/', router);
+
+// Serve static directory (css, js, images, ppt, html)
+app.use(express.static(rootDir));
+
+// Explicit HTML page handlers for Vercel Serverless fallthrough
+const sendHtml = (file) => (req, res) => {
+    res.sendFile(path.join(rootDir, file));
+};
+
+app.get('/', sendHtml('index.html'));
+app.get('/index.html', sendHtml('index.html'));
+app.get('/doctors.html', sendHtml('doctors.html'));
+app.get('/login.html', sendHtml('login.html'));
+app.get('/register.html', sendHtml('register.html'));
+app.get('/appointment.html', sendHtml('appointment.html'));
+app.get('/dashboard.html', sendHtml('dashboard.html'));
+app.get('/admin.html', sendHtml('admin.html'));
+app.get('/ppt', sendHtml('ppt/index.html'));
+app.get('/ppt/', sendHtml('ppt/index.html'));
+app.get('/ppt/index.html', sendHtml('ppt/index.html'));
+app.get('/ppt/presentation.html', sendHtml('ppt/presentation.html'));
 
 module.exports = app;
