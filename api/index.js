@@ -1,25 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
 
 const app = express();
-const PORT = 8080;
-const DB_FILE = path.join(__dirname, 'db.json');
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname)); // Serve frontend files
 
-// Request Logging
-app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-    next();
-});
-
-// Initial Data for CarePlus
+// Initial Dataset for CarePlus Demo
 const initialData = {
     users: [
         { id: 1, name: 'Demo Patient', email: 'patient@example.com', password: 'password', role: 'patient' },
@@ -159,38 +148,18 @@ const initialData = {
     ]
 };
 
-// Helper to load/save data
-function loadDB() {
-    if (!fs.existsSync(DB_FILE)) {
-        fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2));
-        return initialData;
-    }
-    try {
-        const data = JSON.parse(fs.readFileSync(DB_FILE));
-        if (!data.doctors || data.doctors.length < 5) {
-            fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2));
-            return initialData;
-        }
-        return data;
-    } catch(e) {
-        return initialData;
-    }
-}
+// In-memory DB state for serverless execution
+let db = JSON.parse(JSON.stringify(initialData));
 
-function saveDB(data) {
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
-}
+// Create a router to support both /api/... and direct routing
+const router = express.Router();
 
-// --- API Endpoints ---
-
-// Doctors
-app.get('/api/doctors', (req, res) => {
-    const db = loadDB();
+// --- Doctors ---
+router.get('/doctors', (req, res) => {
     res.json(db.doctors);
 });
 
-app.post('/api/doctors', (req, res) => {
-    const db = loadDB();
+router.post('/doctors', (req, res) => {
     const newDoc = { 
         id: Date.now(), 
         rating: 4.8, 
@@ -198,21 +167,17 @@ app.post('/api/doctors', (req, res) => {
         ...req.body 
     };
     db.doctors.push(newDoc);
-    saveDB(db);
     res.status(201).json(newDoc);
 });
 
-app.delete('/api/doctors/:id', (req, res) => {
-    const db = loadDB();
+router.delete('/doctors/:id', (req, res) => {
     db.doctors = db.doctors.filter(d => d.id != req.params.id);
-    saveDB(db);
     res.json({ message: 'Doctor deleted' });
 });
 
-// Users
-app.post('/api/users/login', (req, res) => {
+// --- Users ---
+router.post('/users/login', (req, res) => {
     const { email, password } = req.body || {};
-    const db = loadDB();
     const user = db.users.find(u => u.email === email && u.password === password);
     if (user) {
         res.json(user);
@@ -221,22 +186,19 @@ app.post('/api/users/login', (req, res) => {
     }
 });
 
-app.post('/api/users/register', (req, res) => {
+router.post('/users/register', (req, res) => {
     const { name, email, password, role } = req.body || {};
-    const db = loadDB();
-    const exists = db.users.find(u => u.email === email);
-    if (exists) {
+    const existing = db.users.find(u => u.email === email);
+    if (existing) {
         return res.status(400).json({ message: 'User with this email already exists.' });
     }
     const newUser = { id: Date.now(), name, email, password, role: role || 'patient' };
     db.users.push(newUser);
-    saveDB(db);
     res.status(201).json(newUser);
 });
 
-// Appointments
-app.get('/api/appointments/all', (req, res) => {
-    const db = loadDB();
+// --- Appointments ---
+router.get('/appointments/all', (req, res) => {
     const detailed = db.appointments.map(a => ({
         ...a,
         doctor: db.doctors.find(d => d.id == a.doctorId) || { name: 'Dr. Specialist', specialty: 'General' },
@@ -245,9 +207,9 @@ app.get('/api/appointments/all', (req, res) => {
     res.json(detailed);
 });
 
-app.get('/api/appointments/patient/:id', (req, res) => {
-    const db = loadDB();
-    const myAppts = db.appointments.filter(a => a.patientId == req.params.id);
+router.get('/appointments/patient/:id', (req, res) => {
+    const patientId = req.params.id;
+    const myAppts = db.appointments.filter(a => a.patientId == patientId);
     const detailed = myAppts.map(a => ({
         ...a,
         doctor: db.doctors.find(d => d.id == a.doctorId) || { name: 'Dr. Specialist', specialty: 'General' }
@@ -255,13 +217,12 @@ app.get('/api/appointments/patient/:id', (req, res) => {
     res.json(detailed);
 });
 
-app.post('/api/appointments/book', (req, res) => {
+router.post('/appointments/book', (req, res) => {
     const patientId = req.query.patientId || req.body?.patientId;
     const doctorId = req.query.doctorId || req.body?.doctorId;
     const time = req.query.time || req.body?.time;
     const reason = req.query.reason || req.body?.reason || 'General Consultation';
-    
-    const db = loadDB();
+
     const newAppt = {
         id: db.appointments.length + 1,
         patientId: Number(patientId) || patientId,
@@ -272,34 +233,32 @@ app.post('/api/appointments/book', (req, res) => {
         createdAt: new Date().toISOString()
     };
     db.appointments.push(newAppt);
-    saveDB(db);
     res.status(201).json(newAppt);
 });
 
-app.put('/api/appointments/:id/status', (req, res) => {
+router.put('/appointments/:id/status', (req, res) => {
     const status = req.query.status || req.body?.status;
-    const db = loadDB();
     const appt = db.appointments.find(a => a.id == req.params.id);
     if (appt) {
         appt.status = status;
-        saveDB(db);
         res.json(appt);
     } else {
         res.status(404).json({ message: 'Appointment not found' });
     }
 });
 
-app.delete('/api/appointments/:id', (req, res) => {
-    const db = loadDB();
+router.delete('/appointments/:id', (req, res) => {
     db.appointments = db.appointments.filter(a => a.id != req.params.id);
-    saveDB(db);
     res.json({ message: 'Appointment deleted successfully' });
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`CarePlus Server running at http://localhost:${PORT}`);
-    console.log(`Demo accounts:`);
-    console.log(`  Patient: patient@example.com / password`);
-    console.log(`  Admin:   admin@careplus.com / admin`);
+// Health check
+router.get('/health', (req, res) => {
+    res.json({ status: 'ok', time: new Date().toISOString() });
 });
+
+// Mount router under both `/api` and `/`
+app.use('/api', router);
+app.use('/', router);
+
+module.exports = app;
